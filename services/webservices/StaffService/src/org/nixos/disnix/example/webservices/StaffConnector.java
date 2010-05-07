@@ -24,40 +24,100 @@ public class StaffConnector
 	
 	public Staff[] queryAllStaff() throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "queryAllStaff");
-		Object[] args = {};
-		Class<?>[] returnTypes = { Staff[].class };
-		Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
-		return (Staff[])response[0];
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "queryAllStaff");
+			Object[] args = {};
+			Class<?>[] returnTypes = { Staff[].class };
+			Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
+			return (Staff[])response[0];
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 	
 	public Staff queryStaff(int id) throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "queryStaff");
-		Object[] args = { id };
-		Class<?>[] returnTypes = { Staff.class };
-		Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
-		return (Staff)response[0];
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "queryStaff");
+			Object[] args = { id };
+			Class<?>[] returnTypes = { Staff.class };
+			Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
+			return (Staff)response[0];
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 	
 	public void insertStaff(Staff staff) throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "insertStaff");
-		Object[] args = { staff };
-		serviceClient.invokeRobust(operation, args);
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "insertStaff");
+			Object[] args = { staff };
+			serviceClient.invokeRobust(operation, args);
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 	
 	public void updateStaff(int id, Staff staff) throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "updateStaff");
-		Object[] args = { id, staff };
-		serviceClient.invokeRobust(operation, args);
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "updateStaff");
+			Object[] args = { id, staff };
+			serviceClient.invokeRobust(operation, args);
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 	
 	public void deleteStaff(int id) throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "deleteStaff");
-		Object[] args = {id};
-		serviceClient.invokeRobust(operation, args);
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "deleteStaff");
+			Object[] args = {id};
+			serviceClient.invokeRobust(operation, args);
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 }

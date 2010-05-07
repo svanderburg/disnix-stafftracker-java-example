@@ -55,7 +55,7 @@
 							for(int i = 0; i < roomIdentifier.length; i++)
 							{
 								%>
-								<option value="<%= roomIdentifier[i] %>" <%= staff.getRoom().equals(roomIdentifier[i]) ? "selected" : "" %> %>><%= roomIdentifier[i] %></option>
+								<option value="<%= roomIdentifier[i] %>" <%= (staff != null && staff.getRoom().equals(roomIdentifier[i])) ? "selected" : "" %>><%= roomIdentifier[i] %></option>
 								<%
 							}
 							%>

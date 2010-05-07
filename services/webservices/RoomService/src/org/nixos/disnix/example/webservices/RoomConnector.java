@@ -23,40 +23,100 @@ public class RoomConnector
 	
 	public String[] queryAllRoomIdentifiers() throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "queryAllRoomIdentifiers");
-		Object[] args = {};
-		Class<?>[] returnTypes = { String[].class };
-		Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
-		return (String[])response[0];
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "queryAllRoomIdentifiers");
+			Object[] args = {};
+			Class<?>[] returnTypes = { String[].class };
+			Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
+			return (String[])response[0];
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 	
 	public Room queryRoom(String roomKey) throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "queryRoom");
-		Object[] args = {};
-		Class<?>[] returnTypes = { Room.class };
-		Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
-		return (Room)response[0];
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "queryRoom");
+			Object[] args = { roomKey };
+			Class<?>[] returnTypes = { Room.class };
+			Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
+			return (Room)response[0];
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 	
 	public void insertRoom(Room room) throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "insertRoom");
-		Object[] args = { room };
-		serviceClient.invokeRobust(operation, args);
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "insertRoom");
+			Object[] args = { room };
+			serviceClient.invokeRobust(operation, args);
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 	
 	public void updateRoom(Room room, String roomKey) throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "updateRoom");
-		Object[] args = { room, roomKey };
-		serviceClient.invokeRobust(operation, args);
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "updateRoom");
+			Object[] args = { room, roomKey };
+			serviceClient.invokeRobust(operation, args);
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 	
 	public void deleteRoom(String roomKey) throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "deleteRoom");
-		Object[] args = { roomKey };
-		serviceClient.invokeRobust(operation, args);
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "deleteRoom");
+			Object[] args = { roomKey };
+			serviceClient.invokeRobust(operation, args);
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 }

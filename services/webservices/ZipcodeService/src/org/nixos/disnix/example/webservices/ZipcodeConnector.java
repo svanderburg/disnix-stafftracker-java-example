@@ -24,31 +24,79 @@ public class ZipcodeConnector
 	
 	public Zipcode queryZipcode(String zipcode) throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "queryZipcode");
-		Object[] args = { zipcode };
-		Class<?>[] returnTypes = { Zipcode.class };
-		Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
-		return (Zipcode)response[0];
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "queryZipcode");
+			Object[] args = { zipcode };
+			Class<?>[] returnTypes = { Zipcode.class };
+			Object[] response = serviceClient.invokeBlocking(operation, args, returnTypes);
+			return (Zipcode)response[0];
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 	
 	public void insertZipcode(Zipcode zipcode) throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "insertZipcode");
-		Object[] args = { zipcode };
-		serviceClient.invokeRobust(operation, args);
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "insertZipcode");
+			Object[] args = { zipcode };
+			serviceClient.invokeRobust(operation, args);
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 	
 	public void updateZipcode(String zipcodeKey, Zipcode zipcode) throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "updateZipcode");
-		Object[] args = { zipcodeKey, zipcode };
-		serviceClient.invokeRobust(operation, args);
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "updateZipcode");
+			Object[] args = { zipcodeKey, zipcode };
+			serviceClient.invokeRobust(operation, args);
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 	
 	public void deleteZipcode(String zipcodeKey) throws AxisFault
 	{
-		QName operation = new QName(NAME_SPACE, "deleteZipcode");
-		Object[] args = { zipcodeKey };
-		serviceClient.invokeRobust(operation, args);
+		try
+		{
+			QName operation = new QName(NAME_SPACE, "deleteZipcode");
+			Object[] args = { zipcodeKey };
+			serviceClient.invokeRobust(operation, args);
+		}
+		catch(AxisFault ex)
+		{
+			throw ex;
+		}
+		finally
+		{
+			serviceClient.cleanup();
+			serviceClient.cleanupTransport();
+		}
 	}
 }

@@ -70,6 +70,11 @@
 			<fileset dir="src/org/nixos/disnix/example/webservices" includes="*.properties" />			
 		</copy>				
 		
+		<!-- Copy GeoIP.dat file to the bin directory -->
+		<copy toDir="${deploybuild.dir}">
+			<fileset dir="src" includes="GeoIP.dat" />			
+		</copy>	
+		
 		<!-- Copy the GeoIP JAR file to the lib directory -->
 		<mkdir dir="${deploybuild.dir}/lib" />
 		<copy toDir="${deploybuild.dir}/lib">
