@@ -22,10 +22,12 @@ public class GeolocationService implements Lifecycle
 		try
 		{
 			/* Initialize the GeoIP lookup service */
-			lookup = new LookupService(getClass().getResource("/GeoIP.dat").toExternalForm().substring(5));
+			File file = new File(getClass().getResource("/GeoIP.dat").getFile());
+			lookup = new LookupService(file);
 		}
-		catch(IOException ex)
+		catch(Exception ex)
 		{
+			ex.printStackTrace();
 			throw new AxisFault(ex.toString());
 		}
 	}

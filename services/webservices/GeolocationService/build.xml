@@ -70,11 +70,6 @@
 			<fileset dir="src/org/nixos/disnix/example/webservices" includes="*.properties" />			
 		</copy>				
 		
-		<!-- Copy GeoIP.dat file to the bin directory -->
-		<copy toDir="${deploybuild.dir}">
-			<fileset dir="src" includes="GeoIP.dat" />			
-		</copy>	
-		
 		<!-- Copy the GeoIP JAR file to the lib directory -->
 		<mkdir dir="${deploybuild.dir}/lib" />
 		<copy toDir="${deploybuild.dir}/lib">
@@ -84,7 +79,7 @@
 		<!-- Create an archive with all relevant files from the bin directory -->
 		<mkdir dir="${deploybuild.dir}/WEB-INF/services" />
 		<jar destfile="${deploybuild.dir}/WEB-INF/services/GeolocationService.aar">			
-			<fileset dir="${deploybuild.dir}" includes="GeoIP.dat META-INF/* lib/*.jar org/nixos/disnix/example/webservices/GeolocationService.class org/nixos/disnix/example/webservices/*.properties" />
+			<fileset dir="${deploybuild.dir}" includes="META-INF/* lib/*.jar org/nixos/disnix/example/webservices/GeolocationService.class org/nixos/disnix/example/webservices/*.properties" />
 		</jar>
 	</target>
 	
@@ -92,7 +87,8 @@
 	<target name="generate.war" depends="generate.service.aar">
 		<war destfile="GeolocationService.war" needxmlfile="false">
 			<fileset dir="${AXIS2_WEBAPP}" />
-			<fileset dir="${deploybuild.dir}" includes="WEB-INF/services/GeolocationService.aar" />			
+			<fileset dir="${deploybuild.dir}" includes="WEB-INF/services/GeolocationService.aar" />
+			<classes file="src/GeoIP.dat" />
 		</war>
 	</target>
 	
