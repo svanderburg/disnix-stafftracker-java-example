@@ -1,0 +1,16 @@
+body
+{
+	font-family: arial, lucida, helvetica, Sans-serif;
+}
+
+table, th, td
+{
+	border-style: solid;
+	border-width: 1px;
+}
+
+th
+{
+	text-align: left;
+	background-color: #cccccc;	
+}
