@@ -7,6 +7,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Edit staff</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
 		<%
@@ -22,30 +23,32 @@
 		}
 		%>
 		<form action="modifystaff.jsp" method="post">
-			<input type="hidden" name="action" value="<%= staff == null ? "insert" : "update" %>">
-			<%
-			if(staff != null)
-			{
-				%>
-				<input type="hidden" name="old_Id" value="<%= idParameter %>">
+			<p>
+				<input type="hidden" name="action" value="<%= staff == null ? "insert" : "update" %>">
 				<%
-			}
-			%>
+				if(staff != null)
+				{
+					%>
+					<input type="hidden" name="old_Id" value="<%= idParameter %>">
+					<%
+				}
+				%>
+			</p>
 			<table>
 				<tr>
-					<td>Id</td>
+					<th>Id</th>
 					<td><input name="Id" type="text" value="<%= staff != null ? staff.getId() : "" %>"></td>
 				</tr>
 				<tr>
-					<td>Name</td>
+					<th>Name</th>
 					<td><input name="Name" type="text" value="<%= staff != null ? staff.getName() : "" %>"></td>
 				</tr>
 				<tr>
-					<td>Last name</td>
+					<th>Last name</th>
 					<td><input name="LastName" type="text" value="<%= staff != null ? staff.getLastName() : "" %>"></td>
 				</tr>
 				<tr>
-					<td>Room</td>
+					<th>Room</th>
 					<td>
 						<select name="Room">
 							<%
@@ -63,7 +66,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>IP address</td>
+					<th>IP address</th>
 					<td><input name="ipAddress" type="text" value="<%= staff != null ? staff.getIpAddress() : "" %>"></td>
 				</tr>
 				<tr>

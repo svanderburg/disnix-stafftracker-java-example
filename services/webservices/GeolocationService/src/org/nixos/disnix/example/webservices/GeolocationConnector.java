@@ -5,6 +5,9 @@ import org.apache.axis2.addressing.*;
 import org.apache.axis2.client.*;
 import org.apache.axis2.rpc.client.*;
 
+/**
+ * A connector which invokes remote operations of a GeolocationService.
+ */
 public class GeolocationConnector
 {
 	/** Service client that sends all requests to the Geolocation WebService */
@@ -13,6 +16,12 @@ public class GeolocationConnector
 	/** Namespace of all operation names */
 	private static final String NAME_SPACE = "http://webservices.example.disnix.nixos.org";
 	
+	/**
+	 * Creates a new GeolocationConnector instance
+	 * 
+	 * @param serviceURL URL of the GeolocationService
+	 * @throws AxisFault If the connection fails
+	 */
 	public GeolocationConnector(String serviceURL) throws AxisFault
 	{
 		serviceClient = new RPCServiceClient();
@@ -21,6 +30,9 @@ public class GeolocationConnector
 		options.setTo(targetEPR);
 	}
 	
+	/**
+	 * @see GeolocationService#getCountry(String)
+	 */
 	public String getCountry(String ipAddress) throws AxisFault
 	{
 		try

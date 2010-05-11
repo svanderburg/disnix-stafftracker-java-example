@@ -7,6 +7,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Staff table</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
 		<p><a href="editstaff.jsp">Add staff</a></p>

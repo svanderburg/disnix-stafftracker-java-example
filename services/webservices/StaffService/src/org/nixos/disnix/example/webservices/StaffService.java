@@ -4,11 +4,19 @@ import java.util.*;
 import javax.naming.*;
 import javax.sql.*;
 
+/**
+ * A web service which provides access to the staff database.
+ */
 public class StaffService
 {
 	/** JNDI identifier for the database connection pool */
 	private String jndiName;
 	
+	/**
+	 * Creates a new StaffService instance
+	 * 
+	 * @throws Exception If the properties file cannot be opened
+	 */
 	public StaffService() throws Exception
 	{
 		/* Read the JNDI name of the database from the properties file */
@@ -30,6 +38,12 @@ public class StaffService
 		return ds.getConnection();
 	}
 	
+	/**
+	 * Queries all staff members from the staff database.
+	 * 
+	 * @return An array with all staff members
+	 * @throws Exception If the staff members cannot be retrieved
+	 */
 	public Staff[] queryAllStaff() throws Exception
 	{
 		/* Fetch a connection from the connection pool */
@@ -69,6 +83,13 @@ public class StaffService
 		}
 	}
 	
+	/**
+	 * Queries a specific staff member.
+	 * 
+	 * @param id Id of the staff member
+	 * @return The staff member
+	 * @throws Exception If the staff member cannot be found
+	 */
 	public Staff queryStaff(int id) throws Exception
 	{
 		/* Fetch a connection from the connection pool */
@@ -105,6 +126,13 @@ public class StaffService
 		}
 	}
 	
+	/**
+	 * Inserts a new staff member
+	 * 
+	 * @param staff Staff member to insert
+	 * @return
+	 * @throws Exception If the staff member cannot be inserted
+	 */
 	public int /*void*/ insertStaff(Staff staff) throws Exception
 	{
 		/* Fetch a connection from the connection pool */
@@ -134,6 +162,14 @@ public class StaffService
 		}
 	}
 	
+	/**
+	 * Updates a staff member in the staff database.
+	 * 
+	 * @param id Id of the staff member
+	 * @param staff The new properties of the staff member
+	 * @return
+	 * @throws Exception If the staff member cannot be updated
+	 */
 	public int /*void*/ updateStaff(int id, Staff staff) throws Exception
 	{
 		/* Fetch a connection from the connection pool */
@@ -172,6 +208,13 @@ public class StaffService
 		}
 	}
 	
+	/**
+	 * Deletes a staff member from the staff database
+	 * 
+	 * @param id Id of the staff member
+	 * @return
+	 * @throws Exception If the staff member cannot be deleted
+	 */
 	public int /*void*/ deleteStaff(int id) throws Exception
 	{
 		/* Fetch a connection from the connection pool */

@@ -67,7 +67,7 @@
 		
 		<!-- Create an archive with all relevant files from the build directory -->
 		<war destfile="StaffTracker.war" webxml="WebContent/WEB-INF/web.xml">
-			<fileset dir="WebContent" includes="*.jsp" />
+			<fileset dir="WebContent" includes="*.jsp *.css" />
 			<classes dir="${deploybuild.dir}">
 				<include name="org/nixos/disnix/example/webservices/*" />
 			</classes>

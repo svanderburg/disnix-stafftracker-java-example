@@ -4,11 +4,19 @@ import java.util.*;
 import javax.naming.*;
 import javax.sql.*;
 
+/**
+ * A web service which provides access to the room database.
+ */
 public class RoomService
 {
 	/** JNDI identifier for the database connection pool */
 	private String jndiName;
 	
+	/**
+	 * Creates a new RoomService instance
+	 * 
+	 * @throws Exception If the properties file cannot be opened
+	 */
 	public RoomService() throws Exception
 	{
 		/* Read the JNDI name of the database from the properties file */
@@ -30,6 +38,12 @@ public class RoomService
 		return ds.getConnection();
 	}
 	
+	/**
+	 * Queries all possible room identifiers
+	 * 
+	 * @return An array with room identifiers 
+	 * @throws Exception If the rooms cannot be queried
+	 */
 	public String[] queryAllRoomIdentifiers() throws Exception
 	{
 		/* Fetch a connection from the connection pool */
@@ -59,6 +73,13 @@ public class RoomService
 		}
 	}
 	
+	/**
+	 * Queries the attributes of a given room
+	 * 
+	 * @param roomKey Identifier of the room to be queried
+	 * @return The given room
+	 * @throws Exception If the room does not exists or cannot be queried
+	 */
 	public Room queryRoom(String roomKey) throws Exception
 	{
 		/* Fetch a connection from the connection pool */
@@ -91,7 +112,14 @@ public class RoomService
 			connection.close();
 		}
 	}
-	
+		
+	/**
+	 * Inserts a new room into the room database.
+	 * 
+	 * @param room Room to insert
+	 * @return
+	 * @throws Exception If the room cannot be inserted
+	 */
 	public int /*void*/ insertRoom(Room room) throws Exception
 	{
 		/* Fetch a connection from the connection pool */
@@ -118,6 +146,14 @@ public class RoomService
 		}
 	}
 	
+	/**
+	 * Updates a room in the room database.
+	 * 
+	 * @param room New room attributes
+	 * @param roomKey Identifier of the room that should be updated
+	 * @return
+	 * @throws Exception If the room cannot be updated
+	 */
 	public int /*void*/ updateRoom(Room room, String roomKey) throws Exception
 	{
 		/* Fetch a connection from the connection pool */
@@ -150,6 +186,13 @@ public class RoomService
 		}
 	}
 	
+	/**
+	 * Deletes a room from the room database.
+	 * 
+	 * @param roomKey Identifier of the room
+	 * @return
+	 * @throws Exception If the room cannot be deleted
+	 */
 	public int /*void*/ deleteRoom(String roomKey) throws Exception
 	{
 		/* Fetch a connection from the connection pool */

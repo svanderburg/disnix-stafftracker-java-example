@@ -1,15 +1,23 @@
 package org.nixos.disnix.example.webservices;
 
+/**
+ * Represents a staff record in the staff database
+ */
 public class Staff
 {
+	/** Staff ID number */
 	private int id;
 
+	/** Name of the staff member */
 	private String name;
 	
+	/** Last name of the staff member */
 	private String lastName;
 	
+	/** Room of the staff member */
 	private String room;
 	
+	/** Staff member's IP address */
 	private String ipAddress;
 	
 	public Staff()

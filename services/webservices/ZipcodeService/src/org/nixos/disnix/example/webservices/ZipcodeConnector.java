@@ -6,6 +6,9 @@ import org.apache.axis2.addressing.*;
 import org.apache.axis2.client.*;
 import org.apache.axis2.rpc.client.*;
 
+/**
+ * A connector which invokes remote operations of a ZipcodeService.
+ */
 public class ZipcodeConnector
 {
 	/** Service client that sends all requests to the Zipcode WebService */
@@ -14,6 +17,12 @@ public class ZipcodeConnector
 	/** Namespace of all operation names */
 	private static final String NAME_SPACE = "http://webservices.example.disnix.nixos.org";
 	
+	/**
+	 * Creates a new ZipcodeConnector instance
+	 * 
+	 * @param serviceURL URL of the ZipcodeService
+	 * @throws AxisFault If the connection fails
+	 */
 	public ZipcodeConnector(String serviceURL) throws AxisFault
 	{
 		serviceClient = new RPCServiceClient();
@@ -22,6 +31,9 @@ public class ZipcodeConnector
 		options.setTo(targetEPR);
 	}
 	
+	/**
+	 * @see ZipcodeService#queryZipcode(String)
+	 */
 	public Zipcode queryZipcode(String zipcode) throws AxisFault
 	{
 		try
@@ -43,6 +55,9 @@ public class ZipcodeConnector
 		}
 	}
 	
+	/**
+	 * @see ZipcodeService#insertZipcode(Zipcode)
+	 */
 	public void insertZipcode(Zipcode zipcode) throws AxisFault
 	{
 		try
@@ -62,6 +77,9 @@ public class ZipcodeConnector
 		}
 	}
 	
+	/**
+	 * @see ZipcodeService#updateZipcode(String, Zipcode)
+	 */
 	public void updateZipcode(String zipcodeKey, Zipcode zipcode) throws AxisFault
 	{
 		try
@@ -81,6 +99,9 @@ public class ZipcodeConnector
 		}
 	}
 	
+	/**
+	 * @see ZipcodeService#deleteZipcode(String)
+	 */
 	public void deleteZipcode(String zipcodeKey) throws AxisFault
 	{
 		try

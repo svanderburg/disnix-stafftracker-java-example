@@ -4,11 +4,19 @@ import java.util.*;
 import javax.naming.*;
 import javax.sql.*;
 
+/**
+ * A web service which provides access to the zipcode database.
+ */
 public class ZipcodeService
 {
 	/** JNDI identifier for the database connection pool */
 	private String jndiName;
 	
+	/**
+	 * Creates a new ZipcodeService instance
+	 * 
+	 * @throws Exception If the properties file cannot be opened
+	 */
 	public ZipcodeService() throws Exception
 	{
 		/* Read the JNDI name of the database from the properties file */
@@ -30,6 +38,13 @@ public class ZipcodeService
 		return ds.getConnection();
 	}
 	
+	/**
+	 * Queries a zipcode from the zipcode database
+	 * 
+	 * @param zipcode Zipcode identifier
+	 * @return The zipcode and associated street and city
+	 * @throws Exception If the zipcode cannot be found
+	 */
 	public Zipcode queryZipcode(String zipcode) throws Exception
 	{
 		/* Fetch a connection from the connection pool */
@@ -63,6 +78,13 @@ public class ZipcodeService
 		}
 	}
 	
+	/**
+	 * Inserts a zipcode into the zipcode database.
+	 * 
+	 * @param zipcode Zipcode to insert
+	 * @return
+	 * @throws Exception If the zipcode cannot be inserted
+	 */
 	public int /*void*/ insertZipcode(Zipcode zipcode) throws Exception
 	{
 		/* Fetch a connection from the connection pool */
@@ -90,6 +112,14 @@ public class ZipcodeService
 		}
 	}
 	
+	/**
+	 * Updates a zipcode in the zipcode database.
+	 * 
+	 * @param zipcodeKey Identifier of the zipcode to update
+	 * @param zipcode The new zipcode attributes
+	 * @return
+	 * @throws Exception If the zipcode cannot be updated
+	 */
 	public int /*void*/ updateZipcode(String zipcodeKey, Zipcode zipcode) throws Exception
 	{
 		/* Fetch a connection from the connection pool */
@@ -124,6 +154,13 @@ public class ZipcodeService
 		}
 	}
 	
+	/**
+	 * Deletes a zipcode from the zipcode database.
+	 * 
+	 * @param zipcodeKey Identifier of the zipcode
+	 * @return
+	 * @throws Exception If the zipcode cannot be deleted
+	 */
 	public int /*void*/ deleteZipcode(String zipcodeKey) throws Exception
 	{
 		/* Fetch a connection from the connection pool */

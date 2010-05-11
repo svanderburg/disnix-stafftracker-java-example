@@ -1,9 +1,14 @@
 package org.nixos.disnix.example.webservices;
 
+/**
+ * Represents a room record in the room database
+ */
 public class Room
 {
+	/** Room identifier */
 	private String room;
 	
+	/** Associated zipcode of the room */
 	private String zipcode;
 	
 	public Room()

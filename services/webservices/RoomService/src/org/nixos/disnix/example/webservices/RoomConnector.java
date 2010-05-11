@@ -5,6 +5,9 @@ import org.apache.axis2.addressing.*;
 import org.apache.axis2.client.*;
 import org.apache.axis2.rpc.client.*;
 
+/**
+ * A connector which invokes remote operations of a RoomService.
+ */
 public class RoomConnector
 {
 	/** Service client that sends all requests to the Staff WebService */
@@ -13,6 +16,12 @@ public class RoomConnector
 	/** Namespace of all operation names */
 	private static final String NAME_SPACE = "http://webservices.example.disnix.nixos.org";
 	
+	/**
+	 * Creates a new RoomConnector instance
+	 * 
+	 * @param serviceURL URL of the RoomService
+	 * @throws AxisFault If the connection fails
+	 */
 	public RoomConnector(String serviceURL) throws AxisFault
 	{
 		serviceClient = new RPCServiceClient();
@@ -21,6 +30,9 @@ public class RoomConnector
 		options.setTo(targetEPR);
 	}
 	
+	/**
+	 * @see RoomService#queryAllRoomIdentifiers()
+	 */
 	public String[] queryAllRoomIdentifiers() throws AxisFault
 	{
 		try
@@ -42,6 +54,9 @@ public class RoomConnector
 		}
 	}
 	
+	/**
+	 * @see RoomService#queryRoom(String)
+	 */
 	public Room queryRoom(String roomKey) throws AxisFault
 	{
 		try
@@ -63,6 +78,9 @@ public class RoomConnector
 		}
 	}
 	
+	/**
+	 * @see RoomService#insertRoom(Room)
+	 */
 	public void insertRoom(Room room) throws AxisFault
 	{
 		try
@@ -82,6 +100,9 @@ public class RoomConnector
 		}
 	}
 	
+	/**
+	 * @see RoomService#updateRoom(Room, String)
+	 */
 	public void updateRoom(Room room, String roomKey) throws AxisFault
 	{
 		try
@@ -101,6 +122,9 @@ public class RoomConnector
 		}
 	}
 	
+	/**
+	 * @see RoomService#deleteRoom(String)
+	 */
 	public void deleteRoom(String roomKey) throws AxisFault
 	{
 		try

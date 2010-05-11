@@ -6,6 +6,9 @@ import org.apache.axis2.addressing.*;
 import org.apache.axis2.client.*;
 import org.apache.axis2.rpc.client.*;
 
+/**
+ * A connector which invokes remote operations of a StaffService
+ */
 public class StaffConnector
 {
 	/** Service client that sends all requests to the Staff WebService */
@@ -14,6 +17,12 @@ public class StaffConnector
 	/** Namespace of all operation names */
 	private static final String NAME_SPACE = "http://webservices.example.disnix.nixos.org";
 	
+	/**
+	 * Creates a new StaffConnector instance
+	 * 
+	 * @param serviceURL URL of the StaffService
+	 * @throws AxisFault If the connection fails
+	 */	
 	public StaffConnector(String serviceURL) throws AxisFault
 	{
 		serviceClient = new RPCServiceClient();
@@ -22,6 +31,9 @@ public class StaffConnector
 		options.setTo(targetEPR);
 	}
 	
+	/**
+	 * @see StaffService#queryAllStaff()
+	 */
 	public Staff[] queryAllStaff() throws AxisFault
 	{
 		try
@@ -43,6 +55,9 @@ public class StaffConnector
 		}
 	}
 	
+	/**
+	 * @see StaffService#queryStaff(int)
+	 */
 	public Staff queryStaff(int id) throws AxisFault
 	{
 		try
@@ -64,6 +79,9 @@ public class StaffConnector
 		}
 	}
 	
+	/**
+	 * @see StaffService#insertStaff(Staff)
+	 */
 	public void insertStaff(Staff staff) throws AxisFault
 	{
 		try
@@ -83,6 +101,9 @@ public class StaffConnector
 		}
 	}
 	
+	/**
+	 * @see StaffService#updateStaff(int, Staff)
+	 */
 	public void updateStaff(int id, Staff staff) throws AxisFault
 	{
 		try
@@ -102,6 +123,9 @@ public class StaffConnector
 		}
 	}
 	
+	/**
+	 * @see StaffService#deleteStaff(int)
+	 */
 	public void deleteStaff(int id) throws AxisFault
 	{
 		try

@@ -2,23 +2,37 @@ package org.nixos.disnix.example.webservices;
 import java.util.*;
 import java.io.*;
 
+/**
+ * Contains the URLs of the web services that the StaffTracker needs to know.
+ */
 public class StaffTrackerProperties
 {
+	/** URL of the GeolocationService */
 	private String geolocationServiceURL;
 	
+	/** URL of the RoomService */
 	private String roomServiceURL;
 	
+	/** URL of the StaffService */
 	private String staffServiceURL;
 	
+	/** URL of the ZipcodeService */
 	private String zipcodeServiceURL;
 	
+	/** The only StaffTrackerProperties instance */
 	private static final StaffTrackerProperties instance = new StaffTrackerProperties();
 	
+	/**
+	 * Returns the StaffTrackerProperties singleton instance
+	 */
 	public static final StaffTrackerProperties getInstance()
 	{
 		return instance;
 	}
 	
+	/**
+	 * Creates a new StaffTrackerProperties interface
+	 */
 	private StaffTrackerProperties()
 	{
 		try
