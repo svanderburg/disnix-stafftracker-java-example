@@ -43,12 +43,26 @@ let
 	networkFile = "deployment/DistributedDeployment/network.nix";
 	testScript =
 	  ''
+	    # Wait until the front-end application is deployed
 	    $test2->waitForFile("/var/tomcat/webapps/StaffTracker/stafftable.jsp");	      
-	    $test3->mustSucceed("sleep 30; curl --fail http://test2:8080/StaffTracker/stafftable.jsp >&2");
-	      
+	    
+	    # Wait a little longer and capture the output of the entry page
+	    my $result = $test3->mustSucceed("sleep 30; curl --fail http://test2:8080/StaffTracker/stafftable.jsp");
+	    
+	    # The entry page should contain my name :-)
+	    
+	    if ($result =~ /Sander/) {
+	        print "Entry page contains Sander!\n";
+	    }
+	    else {
+	        die "Entry page should contain Sander!\n";
+	    }
+	    
+	    # Start Firefox and take a screenshot
+	    
 	    $test3->mustSucceed("firefox http://test2:8080/StaffTracker &");
-	    $test3->mustSucceed("sleep 10");
-	      
+	    $test3->waitForWindow(qr/Namoroka/);
+	    $test3->mustSucceed("sleep 30");
 	    $test3->screenshot("screen");
 	  '';
       };              
