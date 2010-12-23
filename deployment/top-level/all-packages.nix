@@ -1,7 +1,5 @@
-{system ? builtins.currentSystem}:
+{system, pkgs}:
 
-let pkgs = import (builtins.getEnv "NIXPKGS_ALL") { inherit system; };
-in
 with pkgs;
 
 rec {

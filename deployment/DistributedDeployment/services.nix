@@ -1,27 +1,27 @@
-{distribution, system}:
+{distribution, system, pkgs}:
 
-let pkgs = import ../top-level/all-packages.nix { inherit system; };
+let customPkgs = import ../top-level/all-packages.nix { inherit system pkgs; };
 in
 rec {
 ### Databases
   
   rooms = {
     name = "rooms";
-    pkg = pkgs.rooms;
+    pkg = customPkgs.rooms;
     dependsOn = {};
     type = "mysql-database";
   };
   
   staff = {
     name = "staff";
-    pkg = pkgs.staff;
+    pkg = customPkgs.staff;
     dependsOn = {};
     type = "mysql-database";
   };
   
   zipcodes = {
     name = "zipcodes";
-    pkg = pkgs.zipcodes;
+    pkg = customPkgs.zipcodes;
     dependsOn = {};
     type = "mysql-database";
   };
@@ -30,14 +30,14 @@ rec {
 
   GeolocationService = {
     name = "GeolocationService";
-    pkg = pkgs.GeolocationService;
+    pkg = customPkgs.GeolocationService;
     dependsOn = {};
     type = "tomcat-webapplication";
   };
   
   RoomService = {
     name = "RoomService";
-    pkg = pkgs.RoomService;
+    pkg = customPkgs.RoomService;
     dependsOn = {
       inherit rooms;
     };
@@ -46,7 +46,7 @@ rec {
   
   StaffService = {
     name = "StaffService";
-    pkg = pkgs.StaffService;
+    pkg = customPkgs.StaffService;
     dependsOn = {
       inherit staff;
     };
@@ -55,7 +55,7 @@ rec {
 
   ZipcodeService = {
     name = "ZipcodeService";
-    pkg = pkgs.ZipcodeService;
+    pkg = customPkgs.ZipcodeService;
     dependsOn = {
       inherit zipcodes;
     };
@@ -66,7 +66,7 @@ rec {
 
   StaffTracker = {
     name = "StaffTracker";
-    pkg = pkgs.StaffTracker;
+    pkg = customPkgs.StaffTracker;
     dependsOn = {
       inherit GeolocationService RoomService StaffService ZipcodeService;
     };
