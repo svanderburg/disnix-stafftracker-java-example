@@ -37,7 +37,7 @@ rec {
   
   RoomService = {
     name = "RoomService";
-    pkg = customPkgs.RoomService;
+    pkg = customPkgs.RoomServiceWrapper;
     dependsOn = {
       inherit rooms;
     };
@@ -46,7 +46,7 @@ rec {
   
   StaffService = {
     name = "StaffService";
-    pkg = customPkgs.StaffService;
+    pkg = customPkgs.StaffServiceWrapper;
     dependsOn = {
       inherit staff;
     };
@@ -55,7 +55,7 @@ rec {
 
   ZipcodeService = {
     name = "ZipcodeService";
-    pkg = customPkgs.ZipcodeService;
+    pkg = customPkgs.ZipcodeServiceWrapper;
     dependsOn = {
       inherit zipcodes;
     };

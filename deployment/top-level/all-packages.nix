@@ -31,6 +31,10 @@ rec {
     inherit stdenv apacheAnt axis2;
   };
   
+  RoomServiceWrapper = import ../pkgs/webservices/RoomService/wrapper.nix {
+    inherit stdenv RoomService;
+  };
+  
   RoomServiceClient = import ../pkgs/webservices/RoomServiceClient {
     inherit stdenv apacheAnt axis2;
   };
@@ -39,12 +43,20 @@ rec {
     inherit stdenv apacheAnt axis2;
   };
   
+  StaffServiceWrapper = import ../pkgs/webservices/StaffService/wrapper.nix {
+    inherit stdenv StaffService;
+  };
+  
   StaffServiceClient = import ../pkgs/webservices/StaffServiceClient {
     inherit stdenv apacheAnt axis2;
   };
     
   ZipcodeService = import ../pkgs/webservices/ZipcodeService {
     inherit stdenv apacheAnt axis2;
+  };
+  
+  ZipcodeServiceWrapper = import ../pkgs/webservices/ZipcodeService/wrapper.nix {
+    inherit stdenv ZipcodeService;
   };
   
   ZipcodeServiceClient = import ../pkgs/webservices/ZipcodeServiceClient {
