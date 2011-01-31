@@ -1,0 +1,17 @@
+<chapter xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xml:id="chap-introduction">
+
+	<title>Introduction</title>
+
+	<para>
+		This is an example case representing a system to manage staff of a university
+		department. The system uses data stored in several databases. For each
+		database, a web service interface is provided to retrieve and update records.
+		Moreover, a geo location service is provided using
+		<link xlink:href="http://www.maxmind.com/app/ip-location">GeoIP</link>
+		to determine the location of a staff member using an IP address.
+		A web application front-end is provided for end-users to retrieve and edit
+		staff members.
+	</para>
+</chapter>
