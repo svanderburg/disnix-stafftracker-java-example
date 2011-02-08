@@ -2,7 +2,7 @@
       xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <info>
-    <title>Disnix TCP proxy example</title>
+    <title>Web Services example</title>
 
     <subtitle>Draft (Version <xi:include href="version.txt" parse="text" />)</subtitle>
 
