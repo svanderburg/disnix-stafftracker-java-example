@@ -8,6 +8,7 @@
     targetEPR = http://10.0.2.2:8081/DisnixService/services/DisnixService;
     sshTarget = "localhost:2222";
     system = "i686-linux";
+    supportedTypes = [ "tomcat-webapplication" "process" "wrapper" ];
   };
   
   test2 = {
@@ -19,5 +20,6 @@
     targetEPR = http://10.0.2.2:8082/DisnixService/services/DisnixService;
     sshTarget = "localhost:2223";
     system = "i686-linux";
+    supportedTypes = [ "tomcat-webapplication" "process" "wrapper" "mysql-database" ];
   }; 
 }
