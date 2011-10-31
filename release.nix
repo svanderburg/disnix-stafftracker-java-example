@@ -1,5 +1,5 @@
-{ nixpkgs ? /etc/nixos/nixpkgs
-, nixos ? /etc/nixos/nixos
+{ nixpkgs ? <nixpkgs>
+, nixos ? <nixos>
 }:
 
 let
