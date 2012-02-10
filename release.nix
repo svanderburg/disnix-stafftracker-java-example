@@ -106,56 +106,6 @@ let
 	    $test3->screenshot("screen");
 	  '';
       };
-    
-    geinig = (import /home/sander/nix/disnix/disnixtesting/trunk/testing.nix.in {
-      inherit nixpkgs nixos;
-    }).buildManifest {
-      name = "WebServices";
-      version = builtins.readFile ./version;
-      tarball = tarball {};
-      servicesFile = "deployment/DistributedDeployment/services.nix";
-      networkFile = "deployment/DistributedDeployment/network.nix";
-      qosFile = "deployment/DistributedDeployment/qos.nix";
-    };
-    
-    geinigTestje = 
-      let
-        pkgs = import nixpkgs {};
-	
-        disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
-          inherit nixpkgs nixos;
-        };
-      in
-      disnixos.disnixTest {
-        name = "WebServices";        
-        tarball = tarball {};
-        manifest = geinig;
-        networkFile = "deployment/DistributedDeployment/network.nix";
-	testScript =
-	  ''
-	    # Wait until the front-end application is deployed
-	    $test2->waitForFile("/var/tomcat/webapps/StaffTracker/stafftable.jsp");	      
-	    
-	    # Wait a little longer and capture the output of the entry page
-	    my $result = $test3->mustSucceed("sleep 30; curl --fail http://test2:8080/StaffTracker/stafftable.jsp");
-	    
-	    # The entry page should contain my name :-)
-	    
-	    if ($result =~ /Sander/) {
-	        print "Entry page contains Sander!\n";
-	    }
-	    else {
-	        die "Entry page should contain Sander!\n";
-	    }
-	    
-	    # Start Firefox and take a screenshot
-	    
-	    $test3->mustSucceed("firefox http://test2:8080/StaffTracker &");
-	    $test3->waitForWindow(qr/Aurora/);
-	    $test3->mustSucceed("sleep 30");
-	    $test3->screenshot("screen");
-	  '';
-      };
   };
 in
 jobs
