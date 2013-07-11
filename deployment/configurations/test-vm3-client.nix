@@ -2,6 +2,10 @@
 
 {
   services = {
+    disnix = {
+      enable = true;
+    };
+    
     openssh = {
       enable = true;
     };

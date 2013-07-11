@@ -7,6 +7,7 @@
     };
 
     disnix = {
+      enable = true;
       useWebServiceInterface = true;
     };
 
