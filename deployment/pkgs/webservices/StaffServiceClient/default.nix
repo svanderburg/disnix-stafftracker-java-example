@@ -1,9 +1,9 @@
-{stdenv, apacheAnt, axis2}:
+{stdenv, apacheAnt, jdk, axis2}:
 
 stdenv.mkDerivation {
   name = "StaffServiceClient";
   src = ../../../../services/webservices/StaffService;
-  buildInputs = [ apacheAnt ];
+  buildInputs = [ apacheAnt jdk ];
   AXIS2_LIB = "${axis2}/lib";
   buildPhase = "ant generate.client.jar";
   installPhase = ''
