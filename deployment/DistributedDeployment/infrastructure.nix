@@ -12,7 +12,7 @@
   };
   
   test2 = {
-    hostname = "10.0.2.2";
+    hostname = "10.0.2.3";
     tomcatPort = 8082;
     mysqlPort = 3307;
     mysqlUsername = "root";
