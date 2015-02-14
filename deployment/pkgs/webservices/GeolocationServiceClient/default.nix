@@ -8,7 +8,7 @@ stdenv.mkDerivation {
   GEOIPJAVA_LIB = "${geoipjava}/share/java";
   buildPhase = "ant generate.client.jar";
   installPhase = ''
-    ensureDir $out/share/java
+    mkdir -p $out/share/java
     cp *.jar $out/share/java
   '';
 }

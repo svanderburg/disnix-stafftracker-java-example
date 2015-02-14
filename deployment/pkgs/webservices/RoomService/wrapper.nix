@@ -14,7 +14,7 @@ in
 stdenv.mkDerivation {
   name = "RoomServiceWrapper";
   buildCommand = ''
-    ensureDir $out/conf/Catalina
+    mkdir -p $out/conf/Catalina
     cat > $out/conf/Catalina/RoomService.xml <<EOF
     ${contextXML}
     EOF

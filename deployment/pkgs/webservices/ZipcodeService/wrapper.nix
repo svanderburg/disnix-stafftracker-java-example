@@ -14,7 +14,7 @@ in
 stdenv.mkDerivation {
   name = "ZipcodeService";
   buildCommand = ''
-    ensureDir $out/conf/Catalina
+    mkdir -p $out/conf/Catalina
     cat > $out/conf/Catalina/ZipcodeService.xml <<EOF
     ${contextXML}
     EOF

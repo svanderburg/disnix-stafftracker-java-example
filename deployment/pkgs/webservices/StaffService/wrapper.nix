@@ -14,7 +14,7 @@ in
 stdenv.mkDerivation {
   name = "StaffService";
   buildCommand = ''
-    ensureDir $out/conf/Catalina
+    mkdir -p $out/conf/Catalina
     cat > $out/conf/Catalina/StaffService.xml <<EOF
     ${contextXML}
     EOF
