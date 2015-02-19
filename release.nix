@@ -68,8 +68,8 @@ let
       in
       disnixos.disnixTest {
         name = "disnix-stafftracker-java-example-tests";
-        tarball = tarball {};
-        manifest = build { system = "x86_64-linux"; };
+        inherit tarball;
+        manifest = builtins.getAttr (builtins.currentSystem) build;
         networkFile = "deployment/DistributedDeployment/network.nix";
         testScript =
           ''
