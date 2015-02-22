@@ -23,27 +23,6 @@ let
         inherit officialRelease;
       };
     
-    doc =
-      pkgs.releaseTools.nixBuild {
-        name = "disnix-stafftracker-java-example-doc";
-        version = builtins.readFile ./version;
-        src = tarball;
-        buildInputs = [ pkgs.libxml2 pkgs.libxslt pkgs.dblatex pkgs.tetex ];
-        
-        buildPhase = ''
-          cd doc
-          make docbookrng=${pkgs.docbook5}/xml/rng/docbook docbookxsl=${pkgs.docbook5_xsl}/xml/xsl/docbook
-        '';
-        
-        checkPhase = "true";
-        
-        installPhase = ''
-          make DESTDIR=$out install
-         
-          echo "doc manual $out/share/doc/WebServicesExample/manual" >> $out/nix-support/hydra-build-products
-        '';
-      };
-        
     build =
       pkgs.lib.genAttrs systems (system:
         let
