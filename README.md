@@ -91,11 +91,11 @@ After the system has been deployed, open a web browser and type the following UR
 
     http://test2:8080/StaffTracker
 
-The `hostname` part must be replaced by the real hostname of the machine to which
-the web application front-end is deployed. Check the distribution model for this.
-If the network expression is used included in this example, the third machine in
-the network machine automatically boots into IceWM and includes the Mozilla
-Firefox web browser for convenience.
+The `test2` hostname must be replaced by the real hostname of the machine to
+which the web application front-end is deployed. Check the distribution model for
+this. If the network expression is used included in this example, the third
+machine in the network machine automatically boots into IceWM and includes the
+Mozilla Firefox web browser for convenience.
 
 License
 =======
