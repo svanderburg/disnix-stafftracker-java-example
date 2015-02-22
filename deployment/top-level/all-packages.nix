@@ -1,73 +1,44 @@
 {system, pkgs}:
 
-rec {
+let
+  callPackage = pkgs.lib.callPackageWith (pkgs // self);
+
+  self = {
 ### Databases
-
-  rooms = import ../pkgs/databases/rooms {
-    inherit (pkgs) stdenv;
-  };
-  
-  staff = import ../pkgs/databases/staff {
-    inherit (pkgs) stdenv;
-  };
-  
-  zipcodes = import ../pkgs/databases/zipcodes {
-    inherit (pkgs) stdenv;
-  };
-
-### Web services + Clients
-
-  GeolocationService = import ../pkgs/webservices/GeolocationService {
-    inherit (pkgs) stdenv apacheAnt jdk axis2 geoipjava;
-  };
-
-  GeolocationServiceClient = import ../pkgs/webservices/GeolocationServiceClient {
-    inherit (pkgs) stdenv apacheAnt jdk axis2 geoipjava;
-  };
-  
-  RoomService = import ../pkgs/webservices/RoomService {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-  };
-  
-  RoomServiceWrapper = import ../pkgs/webservices/RoomService/wrapper.nix {
-    inherit (pkgs) stdenv;
-    inherit RoomService;
-  };
-  
-  RoomServiceClient = import ../pkgs/webservices/RoomServiceClient {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-  };
-
-  StaffService = import ../pkgs/webservices/StaffService {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-  };
-  
-  StaffServiceWrapper = import ../pkgs/webservices/StaffService/wrapper.nix {
-    inherit (pkgs) stdenv;
-    inherit StaffService;
-  };
-  
-  StaffServiceClient = import ../pkgs/webservices/StaffServiceClient {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-  };
     
-  ZipcodeService = import ../pkgs/webservices/ZipcodeService {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-  };
-  
-  ZipcodeServiceWrapper = import ../pkgs/webservices/ZipcodeService/wrapper.nix {
-    inherit (pkgs) stdenv;
-    inherit ZipcodeService;
-  };
-  
-  ZipcodeServiceClient = import ../pkgs/webservices/ZipcodeServiceClient {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-  };
+    rooms = callPackage ../pkgs/databases/rooms { };
+    
+    staff = callPackage ../pkgs/databases/staff { };
+    
+    zipcodes = callPackage ../pkgs/databases/zipcodes { };
+    
+### Web services + Clients
+    
+    GeolocationService = callPackage ../pkgs/webservices/GeolocationService { };
+
+    GeolocationServiceClient = callPackage ../pkgs/webservices/GeolocationServiceClient { };
+    
+    RoomService = callPackage ../pkgs/webservices/RoomService { };
+    
+    RoomServiceWrapper = callPackage ../pkgs/webservices/RoomService/wrapper.nix { };
+    
+    RoomServiceClient = callPackage ../pkgs/webservices/RoomServiceClient { };
+    
+    StaffService = callPackage ../pkgs/webservices/StaffService { };
+    
+    StaffServiceWrapper = callPackage ../pkgs/webservices/StaffService/wrapper.nix { };
+    
+    StaffServiceClient = callPackage ../pkgs/webservices/StaffServiceClient { };
+    
+    ZipcodeService = callPackage ../pkgs/webservices/ZipcodeService { };
+    
+    ZipcodeServiceWrapper = callPackage ../pkgs/webservices/ZipcodeService/wrapper.nix { };
+    
+    ZipcodeServiceClient = callPackage ../pkgs/webservices/ZipcodeServiceClient { };
 
 ### Web applications
 
-  StaffTracker = import ../pkgs/webapplications/StaffTracker {
-    inherit (pkgs) stdenv apacheAnt jdk axis2;
-    inherit GeolocationServiceClient RoomServiceClient StaffServiceClient ZipcodeServiceClient;
+    StaffTracker = callPackage ../pkgs/webapplications/StaffTracker { };
   };
-}
+in
+self
