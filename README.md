@@ -85,6 +85,20 @@ The services can be deployed by running the following commands:
     $ export NIXOPS_DEPLOYMENT=vboxtest
     $ disnixos-env -s services.nix -n network.nix -d distribution.nix --use-nixops
 
+Deploying services as part of a NixOS configuration
+---------------------------------------------------
+Another example case is to deploy the staff tracker as part of a NixOS
+configuration, instead of using Disnix to deploy the services.
+
+A virtualbox network can be deployed as follows:
+
+    $ nixops create ./network-monolithic.nix -d vboxtest
+    $ nixops deploy -d vboxtest
+
+After the network has been deployed, we can activate the services by running:
+    
+    $ nixops ssh -d vboxtest test1 "dysnomia-containers --deploy"
+
 Running the system
 ==================
 After the system has been deployed, open a web browser and type the following URL:
