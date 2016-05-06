@@ -6,8 +6,8 @@ let
     <Context>
       <Resource name="jdbc/StaffDB" auth="Container" type="javax.sql.DataSource"
                 maxActivate="100" maxIdle="30" maxWait="10000"
-                username="${staff.target.mysqlUsername}" password="${staff.target.mysqlPassword}" driverClassName="com.mysql.jdbc.Driver"
-                url="jdbc:mysql://${staff.target.hostname}:${toString (staff.target.mysqlPort)}/${staff.name}?autoReconnect=true" />
+                username="${staff.target.container.mysqlUsername}" password="${staff.target.container.mysqlPassword}" driverClassName="com.mysql.jdbc.Driver"
+                url="jdbc:mysql://${staff.target.properties.hostname}:${toString (staff.target.container.mysqlPort)}/${staff.name}?autoReconnect=true" />
     </Context>
   '';
 in

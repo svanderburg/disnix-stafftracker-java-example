@@ -10,4 +10,3 @@
   staff = [ infrastructure.test2 ];
   zipcodes = [ infrastructure.test2 ];
 }
-

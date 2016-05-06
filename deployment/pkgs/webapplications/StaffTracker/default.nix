@@ -13,10 +13,10 @@ stdenv.mkDerivation {
   ZIPCODESERVICECLIENT_LIB = "${ZipcodeServiceClient}/share/java";
   buildPhase = ''
     cat > src/org/nixos/disnix/example/webservices/stafftracker.properties <<EOF
-    geolocationservice.url=http://${GeolocationService.target.hostname}:${toString (GeolocationService.target.tomcatPort)}/${GeolocationService.name}/services/${GeolocationService.name}
-    roomservice.url=http://${RoomService.target.hostname}:${toString (RoomService.target.tomcatPort)}/${RoomService.name}/services/${RoomService.name}
-    staffservice.url=http://${StaffService.target.hostname}:${toString (StaffService.target.tomcatPort)}/${StaffService.name}/services/${StaffService.name}
-    zipcodeservice.url=http://${ZipcodeService.target.hostname}:${toString (ZipcodeService.target.tomcatPort)}/${ZipcodeService.name}/services/${ZipcodeService.name}
+    geolocationservice.url=http://${GeolocationService.target.properties.hostname}:${toString (GeolocationService.target.container.tomcatPort)}/${GeolocationService.name}/services/${GeolocationService.name}
+    roomservice.url=http://${RoomService.target.properties.hostname}:${toString (RoomService.target.container.tomcatPort)}/${RoomService.name}/services/${RoomService.name}
+    staffservice.url=http://${StaffService.target.properties.hostname}:${toString (StaffService.target.container.tomcatPort)}/${StaffService.name}/services/${StaffService.name}
+    zipcodeservice.url=http://${ZipcodeService.target.properties.hostname}:${toString (ZipcodeService.target.container.tomcatPort)}/${ZipcodeService.name}/services/${ZipcodeService.name}
     EOF
     ant generate.war
   '';

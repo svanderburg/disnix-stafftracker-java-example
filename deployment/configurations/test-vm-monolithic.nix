@@ -43,8 +43,11 @@ in
         RoomService = customPkgs.RoomServiceWrapper {
           rooms = {
             name = "rooms";
-            target = config.dysnomia.containers.mysql-database // {
-              hostname = "localhost";
+            target = {
+              properties = {
+                hostname = "localhost";
+              };
+              container = config.dysnomia.containers.mysql-database;
             };
           };
         };
@@ -52,8 +55,11 @@ in
         StaffService = customPkgs.StaffServiceWrapper {
           staff = {
             name = "staff";
-            target = config.dysnomia.containers.mysql-database // {
-              hostname = "localhost";
+            target = {
+              properties = {
+                hostname = "localhost";
+              };
+              container = config.dysnomia.containers.mysql-database;
             };
           };
         };
@@ -61,8 +67,11 @@ in
         ZipcodeService = customPkgs.ZipcodeServiceWrapper {
           zipcodes = {
             name = "zipcodes";
-            target = config.dysnomia.containers.mysql-database // {
-              hostname = "localhost";
+            target = {
+              properties = {
+                hostname = "localhost";
+              };
+              container = config.dysnomia.containers.mysql-database;
             };
           };
         };
@@ -70,26 +79,38 @@ in
         StaffTracker = customPkgs.StaffTracker {
           GeolocationService = {
             name = "GeolocationService";
-            target = config.dysnomia.containers.tomcat-webapplication // {
-              hostname = "localhost";
+            target = {
+              properties = {
+                hostname = "localhost";
+              };
+              container = config.dysnomia.containers.tomcat-webapplication;
             };
           };
           RoomService = {
             name = "RoomService";
-            target = config.dysnomia.containers.tomcat-webapplication // {
-              hostname = "localhost";
+            target = {
+              properties = {
+                hostname = "localhost";
+              };
+              container = config.dysnomia.containers.tomcat-webapplication;
             };
           };
           StaffService = {
             name = "StaffService";
-            target = config.dysnomia.containers.tomcat-webapplication // {
-              hostname = "localhost";
+            target = {
+              properties = {
+                hostname = "localhost";
+              };
+              container = config.dysnomia.containers.tomcat-webapplication;
             };
           };
           ZipcodeService = {
             name = "ZipcodeService";
-            target = config.dysnomia.containers.tomcat-webapplication // {
-              hostname = "localhost";
+            target = {
+              properties = {
+                hostname = "localhost";
+              };
+              container = config.dysnomia.containers.tomcat-webapplication;
             };
           };
         };

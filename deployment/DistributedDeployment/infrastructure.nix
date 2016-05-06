@@ -3,23 +3,42 @@
  */
 {
   test1 = {
-    hostname = "10.0.2.2";
-    tomcatPort = 8081;
-    targetEPR = http://10.0.2.2:8081/DisnixService/services/DisnixService;
-    sshTarget = "localhost:2222";
     system = "i686-linux";
-    supportedTypes = [ "tomcat-webapplication" "process" "wrapper" ];
+    
+    properties = {
+      hostname = "10.0.2.2";
+      targetEPR = http://10.0.2.2:8081/DisnixService/services/DisnixService;
+      sshTarget = "localhost:2222";
+      supportedTypes = [ "tomcat-webapplication" "process" "wrapper" ];
+    };
+    
+    containers = {
+      tomcat-webapplication = {
+        tomcatPort = 8081;
+      };
+    };
   };
   
   test2 = {
-    hostname = "10.0.2.3";
-    tomcatPort = 8082;
-    mysqlPort = 3307;
-    mysqlUsername = "root";
-    mysqlPassword = builtins.readFile ../configurations/mysqlpw;
-    targetEPR = http://10.0.2.2:8082/DisnixService/services/DisnixService;
-    sshTarget = "localhost:2223";
     system = "i686-linux";
-    supportedTypes = [ "tomcat-webapplication" "process" "wrapper" "mysql-database" ];
-  }; 
+    
+    properties = {
+      hostname = "10.0.2.3";
+      targetEPR = http://10.0.2.2:8082/DisnixService/services/DisnixService;
+      sshTarget = "localhost:2223";
+      supportedTypes = [ "tomcat-webapplication" "process" "wrapper" "mysql-database" ];
+    };
+    
+    containers = {
+      tomcat-webapplication = {
+        tomcatPort = 8082;
+      };
+      
+      mysql-database = {
+        mysqlPort = 3307;
+        mysqlUsername = "root";
+        mysqlPassword = builtins.readFile ../configurations/mysqlpw;
+      };
+    };
+  };
 }
