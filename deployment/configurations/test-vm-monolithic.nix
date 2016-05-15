@@ -27,6 +27,7 @@ in
   
   dysnomia = {
     enable = true;
+    enableAuthentication = true;
     
     components = {
       mysql-database = {
