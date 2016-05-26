@@ -4,6 +4,7 @@ let
   callPackage = pkgs.lib.callPackageWith (pkgs // self);
 
   self = {
+    
 ### Databases
     
     rooms = callPackage ../pkgs/databases/rooms { };
@@ -39,6 +40,22 @@ let
 ### Web applications
 
     StaffTracker = callPackage ../pkgs/webapplications/StaffTracker { };
+
+### Containers
+    
+    mysql-database = callPackage ../pkgs/containers/mysql-database {
+      dysnomia = pkgs.dysnomia.override (origArgs: {
+        enableMySQLDatabase = true;
+      });
+    };
+    
+    tomcat-webapplication = callPackage ../pkgs/containers/tomcat-webapplication {
+      tomcat = pkgs.tomcat8;
+      commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
+      dysnomia = pkgs.dysnomia.override (origArgs: {
+        enableTomcatWebApplication = true;
+      });
+    };
   };
 in
 self
