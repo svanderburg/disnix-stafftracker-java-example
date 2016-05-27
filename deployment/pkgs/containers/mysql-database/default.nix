@@ -1,4 +1,4 @@
-{ stdenv, mysql, dysnomia
+{ stdenv, mysql, nettools, dysnomia
 , mysqlUsername ? "root", mysqlPassword ? "secret"
 , user ? "mysql-database", group ? "mysql-database"
 , dataDir ? "/var/db/mysql", pidDir ? "/run/mysqld"
@@ -16,10 +16,14 @@ stdenv.mkDerivation {
     
     ln -s ${mysql}/bin/mysql $out/bin
     ln -s ${mysql}/bin/mysqldump $out/bin
+    ln -s ${mysql}/bin/mysqladmin $out/bin
     
     # Create wrapper script
     cat > $out/bin/wrapper <<EOF
     #! ${stdenv.shell} -e
+    
+    # MySQL server needs the hostname command
+    export PATH=\$PATH:${nettools}/bin
     
     case "\$1" in
         activate)
@@ -77,7 +81,7 @@ stdenv.mkDerivation {
                 ( echo "use mysql;"
                   echo "update user set Password=password('${mysqlPassword}') where User='${mysqlUsername}';"
                   echo "flush privileges;"
-                  echo "grant all on *.* to '${mysqlUsername}'@'%' identified by 'admin';"
+                  echo "grant all on *.* to '${mysqlUsername}'@'%' identified by '${mysqlPassword}';"
                 ) | ${mysql}/bin/mysql -u root -N
             fi
             ;;
