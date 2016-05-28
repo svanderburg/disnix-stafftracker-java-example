@@ -1,13 +1,19 @@
 { stdenv, tomcat, jdk, dysnomia
+, name ? "tomcat-webapplication"
 , baseDir ? "/var/tomcat"
 , catalinaOpts ? "-Xms64m -Xmx256m"
 , user ? "tomcat-webapp"
 , group ? "tomcat-webapp"
 , commonLibs ? []
+, serverPort ? 8005
+, httpPort ? 8080
+, httpsPort ? 8443
+, ajpPort ? 8009
 }:
 
 stdenv.mkDerivation {
-  name = "tomcat-webapplication";
+  inherit name;
+  
   buildCommand = ''
     mkdir -p $out/bin
     
@@ -50,8 +56,12 @@ stdenv.mkDerivation {
                 -e 's|shared.loader=|shared.loader=\''${catalina.base}/shared/lib/\*.jar|' \
                 ${tomcat}/conf/catalina.properties > ${baseDir}/conf/catalina.properties
 
-            # Copy the server.xml config
-            cp ${tomcat}/conf/server.xml ${baseDir}/conf/server.xml
+            # Copy and modify the server.xml config
+            sed -e "s|8005|${toString serverPort}|" \
+                -e "s|8080|${toString httpPort}|" \
+                -e "s|8443|${toString httpsPort}|" \
+                -e "s|8009|${toString ajpPort}|" \
+                ${tomcat}/conf/server.xml > ${baseDir}/conf/server.xml
             
             # Create a logs/ directory
             mkdir -p ${baseDir}/logs
@@ -121,8 +131,8 @@ stdenv.mkDerivation {
     
     # Add Dysnomia container configuration file for Apache Tomcat
     mkdir -p $out/etc/dysnomia/containers
-    cat > $out/etc/dysnomia/containers/tomcat-webapplication <<EOF
-    tomcatPort=8080
+    cat > $out/etc/dysnomia/containers/${name} <<EOF
+    tomcatPort=${toString httpPort}
     EOF
     
     # Copy the Dysnomia module that manages Apache Tomcat web applications

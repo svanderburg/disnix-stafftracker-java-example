@@ -1,14 +1,17 @@
 { stdenv, mysql, nettools, dysnomia
+, name ? "mysql-database"
 , mysqlUsername ? "root", mysqlPassword ? "secret"
 , user ? "mysql-database", group ? "mysql-database"
 , dataDir ? "/var/db/mysql", pidDir ? "/run/mysqld"
+, port ? 3306
 }:
 
 let
-  mysqldOptions = "--user=${user} --datadir=${dataDir} --basedir=${mysql} --pid-file=${pidDir}/mysqld.pid";
+  mysqldOptions = "--port=${toString port} --user=${user} --datadir=${dataDir} --basedir=${mysql} --pid-file=${pidDir}/mysqld.pid --socket=${pidDir}/mysqld.sock";
 in
 stdenv.mkDerivation {
-  name = "mysql-database";
+  inherit name;
+  
   buildCommand = ''
     mkdir -p $out/bin
     
@@ -52,16 +55,12 @@ stdenv.mkDerivation {
             mkdir -m 0755 -p ${pidDir}
             chown -R ${user} ${pidDir}
 
-            # Make the socket directory
-            mkdir -p /run/mysqld
-            chmod 0755 /run/mysqld
-            chown -R ${user} /run/mysqld
-            
+            # Run the MySQL server
             ${mysql}/bin/mysqld_safe ${mysqldOptions} &
             
             # Wait until the MySQL server is available for use
             count=0
-            while [ ! -e /run/mysqld/mysqld.sock ]
+            while [ ! -e ${pidDir}/mysqld.sock ]
             do
                 if [ \$count -eq 30 ]
                 then
@@ -82,11 +81,11 @@ stdenv.mkDerivation {
                   echo "update user set Password=password('${mysqlPassword}') where User='${mysqlUsername}';"
                   echo "flush privileges;"
                   echo "grant all on *.* to '${mysqlUsername}'@'%' identified by '${mysqlPassword}';"
-                ) | ${mysql}/bin/mysql -u root -N
+                ) | ${mysql}/bin/mysql --socket=${pidDir}/mysqld.sock -u root -N
             fi
             ;;
         deactivate)
-            mysqladmin -u ${mysqlUsername} -p "${mysqlPassword}" -p shutdown
+            mysqladmin --socket=${pidDir}/mysqld.sock -u ${mysqlUsername} -p "${mysqlPassword}" -p shutdown
             
             # Delete user
             if id -u ${user}
@@ -109,10 +108,10 @@ stdenv.mkDerivation {
     mkdir -p $out/etc/dysnomia/containers
       
     # Add Dysnomia container configuration file for the MySQL DBMS
-    cat > $out/etc/dysnomia/containers/mysql-database <<EOF
+    cat > $out/etc/dysnomia/containers/${name} <<EOF
     mysqlUsername="${mysqlUsername}"
     mysqlPassword="${mysqlPassword}"
-    mysqlPort=3306
+    mysqlPort=${toString port}
     EOF
     
     # Copy the Dysnomia module that manages MySQL databases
