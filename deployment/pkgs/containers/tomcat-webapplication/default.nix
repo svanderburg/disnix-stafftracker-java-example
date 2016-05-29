@@ -133,6 +133,7 @@ stdenv.mkDerivation {
     mkdir -p $out/etc/dysnomia/containers
     cat > $out/etc/dysnomia/containers/${name} <<EOF
     tomcatPort=${toString httpPort}
+    catalinaBaseDir=${baseDir}
     EOF
     
     # Copy the Dysnomia module that manages Apache Tomcat web applications

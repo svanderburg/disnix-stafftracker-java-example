@@ -112,6 +112,7 @@ stdenv.mkDerivation {
     mysqlUsername="${mysqlUsername}"
     mysqlPassword="${mysqlPassword}"
     mysqlPort=${toString port}
+    mysqlSocket=${pidDir}/mysqld.sock
     EOF
     
     # Copy the Dysnomia module that manages MySQL databases
