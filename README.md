@@ -268,7 +268,7 @@ model again:
 As may be noticed, we have two MySQL containers and two Apache Tomcat containers
 on one machine in the captured infrastructure model:
 
-``nix
+```nix
 {
   "test1" = {
     properties = {
@@ -313,7 +313,7 @@ on one machine in the captured infrastructure model:
     };
   };
 }
-``
+```
 
 To allow two instances to run next of each other, they have been configured in
 such a way that their resources do not conflict. For example, they bind to
