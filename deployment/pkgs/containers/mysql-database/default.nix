@@ -85,7 +85,7 @@ stdenv.mkDerivation {
             fi
             ;;
         deactivate)
-            mysqladmin --socket=${pidDir}/mysqld.sock -u ${mysqlUsername} -p "${mysqlPassword}" -p shutdown
+            ${mysql}/bin/mysqladmin --socket=${pidDir}/mysqld.sock -u ${mysqlUsername} -p "${mysqlPassword}" -p shutdown
             
             # Delete user
             if id -u ${user}
@@ -104,10 +104,9 @@ stdenv.mkDerivation {
     
     chmod +x $out/bin/wrapper
   
-    # Restart the job when it accidentally terminates
-    mkdir -p $out/etc/dysnomia/containers
-      
     # Add Dysnomia container configuration file for the MySQL DBMS
+    mkdir -p $out/etc/dysnomia/containers
+    
     cat > $out/etc/dysnomia/containers/${name} <<EOF
     mysqlUsername="${mysqlUsername}"
     mysqlPassword="${mysqlPassword}"
