@@ -3,11 +3,11 @@
  */
 {
   test1 = {
-    system = "i686-linux";
+    system = "x86_64-linux";
     
     properties = {
       hostname = "10.0.2.2";
-      targetEPR = http://10.0.2.2:8081/DisnixService/services/DisnixService;
+      targetEPR = http://10.0.2.2:8080/DisnixWebService/services/DisnixWebService;
       sshTarget = "localhost:2222";
       supportedTypes = [ "tomcat-webapplication" "process" "wrapper" ];
     };
@@ -20,11 +20,11 @@
   };
   
   test2 = {
-    system = "i686-linux";
+    system = "x86_64-linux";
     
     properties = {
       hostname = "10.0.2.3";
-      targetEPR = http://10.0.2.2:8082/DisnixService/services/DisnixService;
+      targetEPR = http://10.0.2.3:8080/DisnixWebService/services/DisnixWebService;
       sshTarget = "localhost:2223";
       supportedTypes = [ "tomcat-webapplication" "process" "wrapper" "mysql-database" ];
     };
