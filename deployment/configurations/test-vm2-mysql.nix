@@ -14,8 +14,6 @@
     mysql = {
       enable = true;
       package = pkgs.mysql;
-      rootPassword = ./mysqlpw;
-      initialScript = ./mysqlscript;
     };
 
     tomcat = {

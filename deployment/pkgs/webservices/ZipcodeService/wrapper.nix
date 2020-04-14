@@ -6,7 +6,7 @@ let
     <Context>
       <Resource name="jdbc/ZipcodeDB" auth="Container" type="javax.sql.DataSource"
                 maxActivate="100" maxIdle="30" maxWait="10000"
-                username="${zipcodes.target.container.mysqlUsername}" password="${zipcodes.target.container.mysqlPassword}" driverClassName="com.mysql.jdbc.Driver"
+                username="${zipcodes.mysqlUsername}" password="${zipcodes.mysqlPassword}" driverClassName="com.mysql.jdbc.Driver"
                 url="jdbc:mysql://${zipcodes.target.properties.hostname}:${toString (zipcodes.target.container.mysqlPort)}/${zipcodes.name}?autoReconnect=true" />
     </Context>
   '';

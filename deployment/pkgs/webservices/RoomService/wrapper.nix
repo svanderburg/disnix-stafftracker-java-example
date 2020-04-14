@@ -6,7 +6,7 @@ let
     <Context>
       <Resource name="jdbc/RoomDB" auth="Container" type="javax.sql.DataSource"
                 maxActivate="100" maxIdle="30" maxWait="10000"
-                username="${rooms.target.container.mysqlUsername}" password="${rooms.target.container.mysqlPassword}" driverClassName="com.mysql.jdbc.Driver"
+                username="${rooms.mysqlUsername}" password="${rooms.mysqlPassword}" driverClassName="com.mysql.jdbc.Driver"
                 url="jdbc:mysql://${rooms.target.properties.hostname}:${toString (rooms.target.container.mysqlPort)}/${rooms.name}?autoReconnect=true" />
     </Context>
   '';

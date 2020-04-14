@@ -4,24 +4,36 @@ let customPkgs = import ../top-level/all-packages.nix { inherit system pkgs; };
 in
 rec {
 ### Databases
-  
-  rooms = {
+
+  rooms = rec {
     name = "rooms";
-    pkg = customPkgs.rooms;
+    mysqlUsername = "rooms";
+    mysqlPassword = "rooms";
+    pkg = customPkgs.rooms {
+      inherit mysqlUsername mysqlPassword;
+    };
     dependsOn = {};
     type = "mysql-database";
   };
-  
-  staff = {
+
+  staff = rec {
     name = "staff";
-    pkg = customPkgs.staff;
+    mysqlUsername = "staff";
+    mysqlPassword = "staff";
+    pkg = customPkgs.staff {
+      inherit mysqlUsername mysqlPassword;
+    };
     dependsOn = {};
     type = "mysql-database";
   };
-  
-  zipcodes = {
+
+  zipcodes = rec {
     name = "zipcodes";
-    pkg = customPkgs.zipcodes;
+    mysqlUsername = "zipcodes";
+    mysqlPassword = "zipcodes";
+    pkg = customPkgs.zipcodes {
+      inherit mysqlUsername mysqlPassword;
+    };
     dependsOn = {};
     type = "mysql-database";
   };
@@ -34,7 +46,7 @@ rec {
     dependsOn = {};
     type = "tomcat-webapplication";
   };
-  
+
   RoomService = {
     name = "RoomService";
     pkg = customPkgs.RoomServiceWrapper;
@@ -43,7 +55,7 @@ rec {
     };
     type = "tomcat-webapplication";
   };
-  
+
   StaffService = {
     name = "StaffService";
     pkg = customPkgs.StaffServiceWrapper;

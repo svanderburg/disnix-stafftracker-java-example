@@ -6,7 +6,7 @@ let
     <Context>
       <Resource name="jdbc/StaffDB" auth="Container" type="javax.sql.DataSource"
                 maxActivate="100" maxIdle="30" maxWait="10000"
-                username="${staff.target.container.mysqlUsername}" password="${staff.target.container.mysqlPassword}" driverClassName="com.mysql.jdbc.Driver"
+                username="${staff.mysqlUsername}" password="${staff.mysqlPassword}" driverClassName="com.mysql.jdbc.Driver"
                 url="jdbc:mysql://${staff.target.properties.hostname}:${toString (staff.target.container.mysqlPort)}/${staff.name}?autoReconnect=true" />
     </Context>
   '';
