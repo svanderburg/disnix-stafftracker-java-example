@@ -5,7 +5,7 @@
 , cacheDir ? "${stateDir}/cache"
 , tmpDir ? (if stateDir == "/var" then "/tmp" else "${stateDir}/tmp")
 , forceDisableUserChange ? false
-, processManager ? "sysvinit"
+, processManager ? "systemd"
 }:
 
 let
@@ -23,19 +23,28 @@ let
     inherit pkgs stateDir runtimeDir logDir cacheDir tmpDir forceDisableUserChange processManager;
   };
 
+  constructorsSupervisord = import ../../../nix-processmgmt/examples/service-containers-agnostic/constructors.nix {
+    inherit pkgs stateDir runtimeDir logDir cacheDir tmpDir forceDisableUserChange;
+    processManager = "supervisord";
+  };
+
   applicationServices = import ./services.nix {
     inherit pkgs system distribution invDistribution;
   };
 in
 rec {
-  simpleAppservingTomcat = constructors.simpleAppservingTomcat {
-    httpPort = 8080;
-    commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
+  supervisord = constructors.extendableSupervisord {
     type = processType;
   };
 
-  mysql = constructors.mysql {
+  simpleAppservingTomcat = constructorsSupervisord.simpleAppservingTomcat {
+    httpPort = 8080;
+    commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
+    type = "supervisord-program";
+  };
+
+  mysql = constructorsSupervisord.mysql {
     port = 3306;
-    type = processType;
+    type = "supervisord-program";
   };
 } // applicationServices

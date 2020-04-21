@@ -3,8 +3,8 @@
 {
   mysql-primary = [ infrastructure.test1 ];
   mysql-secondary = [ infrastructure.test1 ];
-  simple-appserving-tomcat-primary = [ infrastructure.test2 ];
-  simple-appserving-tomcat-secondary = [ infrastructure.test2 ];
+  simpleAppservingTomcat-primary = [ infrastructure.test2 ];
+  simpleAppservingTomcat-secondary = [ infrastructure.test2 ];
 
   GeolocationService = {
     targets = [ { target = infrastructure.test2; container = "tomcat-webapplication-primary"; } ];

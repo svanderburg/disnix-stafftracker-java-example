@@ -28,85 +28,35 @@ let
   };
 in
 rec {
-  simple-appserving-tomcat-primary =
-    let
-      instanceSuffix = "-primary";
-    in
-    rec {
-      name = "simple-appserving-tomcat${instanceSuffix}";
+  simpleAppservingTomcat-primary = constructors.simpleAppservingTomcat {
+    instanceSuffix = "-primary";
+    httpPort = 8080;
+    httpsPort = 8443;
+    serverPort = 8005;
+    ajpPort = 8009;
+    commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
+    type = processType;
+  };
 
-      tomcatPort = 8080;
-      catalinaBaseDir = "${stateDir}/tomcat${instanceSuffix}";
+  simpleAppservingTomcat-secondary = constructors.simpleAppservingTomcat {
+    instanceSuffix = "-secondary";
+    httpPort = 8081;
+    httpsPort = 8444;
+    serverPort = 8006;
+    ajpPort = 8010;
+    commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
+    type = processType;
+  };
 
-      pkg = constructors.simple-appserving-tomcat {
-        inherit instanceSuffix;
-        httpPort = tomcatPort;
-        httpsPort = 8443;
-        serverPort = 8005;
-        ajpPort = 8009;
-        commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
-      };
+  mysql-primary = constructors.mysql {
+    instanceSuffix = "-primary";
+    port = 3306;
+    type = processType;
+  };
 
-      providesContainer = "tomcat-webapplication${instanceSuffix}";
-      type = processType;
-    };
-
-  simple-appserving-tomcat-secondary =
-    let
-      instanceSuffix = "-secondary";
-    in
-    rec {
-      name = "simple-appserving-tomcat${instanceSuffix}";
-
-      tomcatPort = 8081;
-      catalinaBaseDir = "${stateDir}/tomcat${instanceSuffix}";
-
-      pkg = constructors.simple-appserving-tomcat {
-        inherit instanceSuffix;
-        httpPort = tomcatPort;
-        httpsPort = 8444;
-        serverPort = 8006;
-        ajpPort = 8010;
-        commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
-      };
-
-      providesContainer = "tomcat-webapplication${instanceSuffix}";
-      type = processType;
-    };
-
-  mysql-primary =
-    let
-      instanceSuffix = "-primary";
-    in
-    rec {
-      name = "mysql${instanceSuffix}";
-      mysqlPort = 3306;
-      mysqlSocket = "${runtimeDir}/mysqld${instanceSuffix}/mysqld${instanceSuffix}.sock";
-
-      pkg = constructors.mysql {
-        inherit instanceSuffix;
-        port = mysqlPort;
-      };
-
-      providesContainer = "mysql-database${instanceSuffix}";
-      type = processType;
-    };
-
-  mysql-secondary =
-    let
-      instanceSuffix = "-secondary";
-    in
-    rec {
-      name = "mysql${instanceSuffix}";
-      mysqlPort = 3307;
-      mysqlSocket = "${runtimeDir}/mysqld${instanceSuffix}/mysqld${instanceSuffix}.sock";
-
-      pkg = constructors.mysql {
-        inherit instanceSuffix;
-        port = mysqlPort;
-      };
-
-      providesContainer = "mysql-database${instanceSuffix}";
-      type = processType;
-    };
+  mysql-secondary = constructors.mysql {
+    instanceSuffix = "-secondary";
+    port = 3307;
+    type = processType;
+  };
 } // applicationServices
