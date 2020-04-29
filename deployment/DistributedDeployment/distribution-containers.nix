@@ -1,6 +1,6 @@
 {infrastructure}:
 
 {
-  mysql-database = [ infrastructure.test2 ];
-  tomcat-webapplication = [ infrastructure.test1 infrastructure.test2 ];
+  mysql = [ infrastructure.test2 ];
+  simpleAppservingTomcat = [ infrastructure.test1 infrastructure.test2 ];
 }

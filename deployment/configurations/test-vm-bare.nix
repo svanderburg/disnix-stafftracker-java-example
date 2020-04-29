@@ -5,12 +5,12 @@
     openssh = {
       enable = true;
     };
-    
+
     disnix = {
       enable = true;
     };
   };
-  
+
   networking.firewall.enable = false;
 
   environment = {
@@ -21,7 +21,7 @@
   };
   
   dysnomia = {
-    extraModulePaths = [ "/nix/var/nix/profiles/disnix/containers/etc/dysnomia/modules" ];
+    extraModulePaths = [ "/nix/var/nix/profiles/disnix/containers/libexec/dysnomia" ];
     extraContainerPaths = [ "/nix/var/nix/profiles/disnix/containers/etc/dysnomia/containers" ];
   };
 }

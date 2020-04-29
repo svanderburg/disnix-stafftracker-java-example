@@ -1,10 +1,14 @@
 {infrastructure}:
 
 {
+  # Container providers
+
   mysql-primary = [ infrastructure.test1 ];
   mysql-secondary = [ infrastructure.test1 ];
   simpleAppservingTomcat-primary = [ infrastructure.test2 ];
   simpleAppservingTomcat-secondary = [ infrastructure.test2 ];
+
+  # Application components
 
   GeolocationService = {
     targets = [ { target = infrastructure.test2; container = "tomcat-webapplication-primary"; } ];

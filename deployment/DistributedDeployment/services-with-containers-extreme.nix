@@ -5,7 +5,7 @@
 , cacheDir ? "${stateDir}/cache"
 , tmpDir ? (if stateDir == "/var" then "/tmp" else "${stateDir}/tmp")
 , forceDisableUserChange ? false
-, processManager ? "systemd"
+, processManager ? "sysvinit"
 }:
 
 let
