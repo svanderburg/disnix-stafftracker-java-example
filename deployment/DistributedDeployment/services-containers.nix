@@ -22,10 +22,6 @@ let
   constructors = import ../../../nix-processmgmt/examples/service-containers-agnostic/constructors.nix {
     inherit pkgs stateDir runtimeDir logDir cacheDir tmpDir forceDisableUserChange processManager;
   };
-
-  applicationServices = import ./services.nix {
-    inherit pkgs system distribution invDistribution;
-  };
 in
 rec {
   simpleAppservingTomcat = constructors.simpleAppservingTomcat {
