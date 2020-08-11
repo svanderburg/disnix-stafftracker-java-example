@@ -22,7 +22,7 @@ let
   };
 in
 rec {
-  simpleAppservingTomcat-primary = constructors.simpleAppservingTomcat {
+  tomcat-primary = constructors.simpleAppservingTomcat {
     instanceSuffix = "-primary";
     httpPort = 8080;
     httpsPort = 8443;
@@ -32,7 +32,7 @@ rec {
     type = processType;
   };
 
-  simpleAppservingTomcat-secondary = constructors.simpleAppservingTomcat {
+  tomcat-secondary = constructors.simpleAppservingTomcat {
     instanceSuffix = "-secondary";
     httpPort = 8081;
     httpsPort = 8444;

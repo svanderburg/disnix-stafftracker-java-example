@@ -31,7 +31,7 @@ rec {
     type = processType;
   };
 
-  simpleAppservingTomcat = constructorsSupervisord.simpleAppservingTomcat {
+  tomcat = constructorsSupervisord.simpleAppservingTomcat {
     httpPort = 8080;
     commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
     type = "supervisord-program";
