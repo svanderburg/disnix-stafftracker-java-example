@@ -5,45 +5,46 @@ let
     inherit pkgs;
     inherit (pkgs.stdenv) system;
   };
+
+  mysqlUsername = "root";
+  mysqlPassword = "";
 in
 {
   networking.firewall.allowedTCPPorts = [ 8080 ];
-  
+
   services = {
     openssh.enable = true;
-    
+
     mysql = {
       enable = true;
       package = pkgs.mysql;
-      rootPassword = ../configurations/mysqlpw;
     };
-    
+
     tomcat = {
       enable = true;
       commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
       catalinaOpts = "-Xms64m -Xmx256m";
     };
   };
-  
+
   dysnomia = {
     enable = true;
     enableAuthentication = true;
-    
+
     components = {
       mysql-database = {
-        rooms = customPkgs.rooms;
-        
-        staff = customPkgs.staff;
-        
-        zipcodes = customPkgs.zipcodes;
+        rooms = customPkgs.rooms { inherit mysqlUsername mysqlPassword; };
+        staff = customPkgs.staff { inherit mysqlUsername mysqlPassword; };
+        zipcodes = customPkgs.zipcodes { inherit mysqlUsername mysqlPassword; };
       };
-      
+
       tomcat-webapplication = {
         GeolocationService = customPkgs.GeolocationService;
-        
+
         RoomService = customPkgs.RoomServiceWrapper {
           rooms = {
             name = "rooms";
+            inherit mysqlUsername mysqlPassword;
             target = {
               properties = {
                 hostname = "localhost";
@@ -52,10 +53,11 @@ in
             };
           };
         };
-        
+
         StaffService = customPkgs.StaffServiceWrapper {
           staff = {
             name = "staff";
+            inherit mysqlUsername mysqlPassword;
             target = {
               properties = {
                 hostname = "localhost";
@@ -64,10 +66,11 @@ in
             };
           };
         };
-        
+
         ZipcodeService = customPkgs.ZipcodeServiceWrapper {
           zipcodes = {
             name = "zipcodes";
+            inherit mysqlUsername mysqlPassword;
             target = {
               properties = {
                 hostname = "localhost";
@@ -76,7 +79,7 @@ in
             };
           };
         };
-        
+
         StaffTracker = customPkgs.StaffTracker {
           GeolocationService = {
             name = "GeolocationService";
