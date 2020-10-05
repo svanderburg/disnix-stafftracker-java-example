@@ -6,18 +6,25 @@ disnixos.disnixTest {
   networkFile = "deployment/DistributedDeployment/network-bare.nix";
   testScript =
     ''
-      test2.wait_for_file("/var/tomcat-production/webapps")
+      test2.wait_for_file("/var/tomcat-primary/webapps")
       test2.succeed("sleep 10; curl http://localhost:8080")
-      test2.wait_for_file("/var/tomcat-test/webapps")
+      test2.wait_for_file("/var/tomcat-secondary/webapps")
       test2.succeed("sleep 10; curl http://localhost:8081")
 
-      test1.wait_for_file("/run/mysqld-production/mysqld.sock")
+      socket_primary = "/run/mysqld-primary/mysqld.sock"
+      test1.wait_for_file(socket_primary)
       test1.succeed(
-          "echo 'show databases;' | ${pkgs.mysql}/bin/mysql --socket=/run/mysqld-production/mysqld.sock --user=root --password=secret"
+          "echo 'show databases;' | ${pkgs.mysql}/bin/mysql --socket={}".format(
+              socket_primary
+          )
       )
-      test1.wait_for_file("/run/mysqld-test/mysqld.sock")
-      test1.mustSucceed(
-          "echo 'show databases;' | ${pkgs.mysql}/bin/mysql --socket=/run/mysqld-test/mysqld.sock --user=root --password=secret"
+
+      socket_secondary = "/run/mysqld-secondary/mysqld.sock"
+      test1.wait_for_file(socket_secondary)
+      test1.succeed(
+          "echo 'show databases;' | ${pkgs.mysql}/bin/mysql --socket={}".format(
+              socket_secondary
+          )
       )
     '';
 }

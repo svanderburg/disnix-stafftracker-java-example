@@ -6,21 +6,21 @@
 , tmpDir ? (if stateDir == "/var" then "/tmp" else "${stateDir}/tmp")
 , forceDisableUserChange ? false
 , processManager ? "sysvinit"
-}:
+, nix-processmgmt ? ../../../nix-processmgmt
+}@args:
 
 let
-  processType = import ../../../nix-processmgmt/nixproc/derive-dysnomia-process-type.nix {
+  processType = import "${nix-processmgmt}/nixproc/derive-dysnomia-process-type.nix" {
     inherit processManager;
   };
 
-  constructors = import ../../../nix-processmgmt/examples/service-containers-agnostic/constructors.nix {
+  constructors = import "${nix-processmgmt}/examples/service-containers-agnostic/constructors.nix" {
     inherit pkgs stateDir runtimeDir logDir cacheDir tmpDir forceDisableUserChange processManager;
   };
 
-  constructorsSupervisord = import ../../../nix-processmgmt/examples/service-containers-agnostic/constructors.nix {
-    inherit pkgs stateDir runtimeDir logDir cacheDir tmpDir forceDisableUserChange;
+  containerServicesForSupervisord = import ./services-containers.nix (args // {
     processManager = "supervisord";
-  };
+  });
 
   applicationServices = import ./services.nix {
     inherit pkgs system distribution invDistribution;
@@ -30,15 +30,6 @@ rec {
   supervisord = constructors.extendableSupervisord {
     type = processType;
   };
-
-  tomcat = constructorsSupervisord.simpleAppservingTomcat {
-    httpPort = 8080;
-    commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
-    type = "supervisord-program";
-  };
-
-  mysql = constructorsSupervisord.mysql {
-    port = 3306;
-    type = "supervisord-program";
-  };
-} // applicationServices
+}
+// containerServicesForSupervisord
+// applicationServices

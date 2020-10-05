@@ -6,9 +6,11 @@ disnixos.disnixTest {
   networkFile = "deployment/DistributedDeployment/network-bare.nix";
   testScript =
     ''
-      test2.wait_for_file("/run/mysqld/mysqld.sock")
+      socket_file = "/run/mysqld/mysqld.sock"
+
+      test2.wait_for_file(socket_file)
       test2.succeed(
-          "echo 'show databases;' | ${pkgs.mysql}/bin/mysql --user=root --password=secret"
+          "echo 'show databases;' | ${pkgs.mysql}/bin/mysql"
       )
 
       test1.wait_for_file("/var/tomcat/webapps")
