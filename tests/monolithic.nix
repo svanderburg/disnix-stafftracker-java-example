@@ -18,7 +18,7 @@ simpleTest {
       test1.succeed("dysnomia-containers --deploy")
 
       # Wait until the front-end application is deployed
-      test1.wait_for_unit("/var/tomcat/webapps/StaffTracker/stafftable.jsp")
+      test1.wait_for_file("/var/tomcat/webapps/StaffTracker/stafftable.jsp")
 
       # Wait a little longer and capture the output of the entry page
       result = test1.succeed(

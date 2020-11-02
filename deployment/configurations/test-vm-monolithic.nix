@@ -6,8 +6,6 @@ let
     inherit (pkgs.stdenv) system;
   };
 
-  mysqlUsername = "root";
-  mysqlPassword = "";
 in
 {
   networking.firewall.allowedTCPPorts = [ 8080 ];
@@ -27,98 +25,115 @@ in
     };
   };
 
-  dysnomia = {
-    enable = true;
-    enableAuthentication = true;
-
-    components = {
-      mysql-database = {
-        rooms = customPkgs.rooms { inherit mysqlUsername mysqlPassword; };
-        staff = customPkgs.staff { inherit mysqlUsername mysqlPassword; };
-        zipcodes = customPkgs.zipcodes { inherit mysqlUsername mysqlPassword; };
+  dysnomia =
+    let
+      dbUsers = {
+        rooms = {
+          mysqlUsername = "rooms";
+          mysqlPassword = "rooms";
+        };
+        staff = {
+          mysqlUsername = "staff";
+          mysqlPassword = "staff";
+        };
+        zipcodes = {
+          mysqlUsername = "zipcodes";
+          mysqlPassword = "zipcodes";
+        };
       };
+    in
+    {
+      enable = true;
+      enableAuthentication = true;
 
-      tomcat-webapplication = {
-        GeolocationService = customPkgs.GeolocationService;
-
-        RoomService = customPkgs.RoomServiceWrapper {
-          rooms = {
-            name = "rooms";
-            inherit mysqlUsername mysqlPassword;
-            target = {
-              properties = {
-                hostname = "localhost";
-              };
-              container = config.dysnomia.containers.mysql-database;
-            };
-          };
+      components = {
+        mysql-database = {
+          rooms = customPkgs.rooms dbUsers.rooms;
+          staff = customPkgs.staff dbUsers.staff;
+          zipcodes = customPkgs.zipcodes dbUsers.zipcodes;
         };
 
-        StaffService = customPkgs.StaffServiceWrapper {
-          staff = {
-            name = "staff";
-            inherit mysqlUsername mysqlPassword;
-            target = {
-              properties = {
-                hostname = "localhost";
-              };
-              container = config.dysnomia.containers.mysql-database;
-            };
-          };
-        };
+        tomcat-webapplication = {
+          GeolocationService = customPkgs.GeolocationService;
 
-        ZipcodeService = customPkgs.ZipcodeServiceWrapper {
-          zipcodes = {
-            name = "zipcodes";
-            inherit mysqlUsername mysqlPassword;
-            target = {
-              properties = {
-                hostname = "localhost";
+          RoomService = customPkgs.RoomServiceWrapper {
+            rooms = {
+              name = "rooms";
+              inherit (dbUsers.rooms) mysqlUsername mysqlPassword;
+              target = {
+                properties = {
+                  hostname = "localhost";
+                };
+                container = config.dysnomia.containers.mysql-database;
               };
-              container = config.dysnomia.containers.mysql-database;
             };
           };
-        };
 
-        StaffTracker = customPkgs.StaffTracker {
-          GeolocationService = {
-            name = "GeolocationService";
-            target = {
-              properties = {
-                hostname = "localhost";
+          StaffService = customPkgs.StaffServiceWrapper {
+            staff = {
+              name = "staff";
+              inherit (dbUsers.staff) mysqlUsername mysqlPassword;
+              target = {
+                properties = {
+                  hostname = "localhost";
+                };
+                container = config.dysnomia.containers.mysql-database;
               };
-              container = config.dysnomia.containers.tomcat-webapplication;
             };
           };
-          RoomService = {
-            name = "RoomService";
-            target = {
-              properties = {
-                hostname = "localhost";
+
+          ZipcodeService = customPkgs.ZipcodeServiceWrapper {
+            zipcodes = {
+              name = "zipcodes";
+              inherit (dbUsers.zipcodes) mysqlUsername mysqlPassword;
+              target = {
+                properties = {
+                  hostname = "localhost";
+                };
+                container = config.dysnomia.containers.mysql-database;
               };
-              container = config.dysnomia.containers.tomcat-webapplication;
             };
           };
-          StaffService = {
-            name = "StaffService";
-            target = {
-              properties = {
-                hostname = "localhost";
+
+          StaffTracker = customPkgs.StaffTracker {
+            GeolocationService = {
+              name = "GeolocationService";
+              target = {
+                properties = {
+                  hostname = "localhost";
+                };
+                container = config.dysnomia.containers.tomcat-webapplication;
               };
-              container = config.dysnomia.containers.tomcat-webapplication;
             };
-          };
-          ZipcodeService = {
-            name = "ZipcodeService";
-            target = {
-              properties = {
-                hostname = "localhost";
+            RoomService = {
+              name = "RoomService";
+              target = {
+                properties = {
+                  hostname = "localhost";
+                };
+                container = config.dysnomia.containers.tomcat-webapplication;
               };
-              container = config.dysnomia.containers.tomcat-webapplication;
+            };
+            StaffService = {
+              name = "StaffService";
+              target = {
+                properties = {
+                  hostname = "localhost";
+                };
+                container = config.dysnomia.containers.tomcat-webapplication;
+              };
+            };
+            ZipcodeService = {
+              name = "ZipcodeService";
+              target = {
+                properties = {
+                  hostname = "localhost";
+                };
+                container = config.dysnomia.containers.tomcat-webapplication;
+              };
             };
           };
         };
       };
     };
-  };
 }
