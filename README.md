@@ -43,24 +43,9 @@ the corresponding modules to use them.
 
 The system can be deployed by running the following command:
 
-    $ disnix-env -s services.nix -i infrastructure.nix -d distribution.nix
-
-Hybrid deployment of NixOS infrastructure and services using DisnixOS
----------------------------------------------------------------------
-For this scenario you need to install a network of NixOS machines, running the
-Disnix service. This can be done by enabling the following configuration
-option in each `/etc/nixos/configuration.nix` file:
-
-    services.disnix.enable = true;
-
-You may also need to adapt the NixOS configurations to which the `network.nix`
-model is referring, so that they will match the actual system configurations.
-
-The system including its underlying infrastructure can be deployed by using the
-`disnixos-env` command. The following instruction deploys the system including
-the underlying infrastructure.
-
-    $ disnixos-env -s services.nix -n network.nix -d distribution.nix
+```bash
+$ disnix-env -s services.nix -i infrastructure.nix -d distribution.nix
+```
 
 Deployment using the NixOS test driver
 --------------------------------------
@@ -68,7 +53,9 @@ This system can be deployed without adapting any of the models in
 `deployment/DistributedDeployment`. By running the following instruction, the
 variant without the proxy can be deployed in a network of virtual machines:
 
-    $ disnixos-vm-env -s services.nix -n network.nix -d distribution.nix
+```bash
+$ disnixos-vm-env -s services.nix -n network.nix -d distribution.nix
+```
 
 Deployment using NixOps for infrastructure and Disnix for service deployment
 ----------------------------------------------------------------------------
@@ -77,13 +64,17 @@ let Disnix do the deployment of the services to these machines.
 
 A virtualbox network can be deployed as follows:
 
-    $ nixops create ./network.nix ./network-virtualbox.nix -d vboxtest
-    $ nixops deploy -d vboxtest
+```bash
+$ nixops create ./network.nix ./network-virtualbox.nix -d vboxtest
+$ nixops deploy -d vboxtest
+```
 
 The services can be deployed by running the following commands:
 
-    $ export NIXOPS_DEPLOYMENT=vboxtest
-    $ disnixos-env -s services.nix -n network.nix -d distribution.nix --use-nixops
+```bash
+$ export NIXOPS_DEPLOYMENT=vboxtest
+$ disnixos-env -s services.nix -n network.nix -d distribution.nix --use-nixops
+```
 
 Deploying services as part of a NixOS configuration
 ---------------------------------------------------
@@ -92,12 +83,16 @@ configuration, instead of using Disnix to deploy the services.
 
 A virtualbox network can be deployed as follows:
 
-    $ nixops create ./network-monolithic.nix ./network-monolithic-virtualbox.nix -d vboxtest
-    $ nixops deploy -d vboxtest
+```bash
+$ nixops create ./network-monolithic.nix ./network-monolithic-virtualbox.nix -d vboxtest
+$ nixops deploy -d vboxtest
+```
 
 After the network has been deployed, we can activate the services by running:
-    
-    $ nixops ssh -d vboxtest test1 "dysnomia-containers --deploy"
+
+```bash
+$ nixops ssh -d vboxtest test1 "dysnomia-containers --deploy"
+```
 
 Running the system
 ==================
@@ -118,23 +113,29 @@ machines and the container services (MySQL and Apache Tomcat) by external means
 first and then the services with Disnix, it is also possible to let Disnix deploy
 the containers.
 
-Deploying containers and services
----------------------------------
+Deploying containers as a system and services as two integrated systems
+-----------------------------------------------------------------------
 The following commands can be used to let NixOps deploy bare machine
 configurations with Disnix preinstalled and no additional container services:
 
-    $ nixops create ./network-bare.nix ./network-virtualbox.nix -d vboxtest
-    $ nixops deploy -d vboxtest
+```bash
+$ nixops create ./network-bare.nix ./network-virtualbox.nix -d vboxtest
+$ nixops deploy -d vboxtest
+```
 
 The following environment variables must be set to integrate Disnix with NixOps:
 
-    $ export NIXOPS_DEPLOYMENT=vboxtest
-    $ export DISNIX_CLIENT_INTERFACE=disnix-nixops-client
+```bash
+$ export NIXOPS_DEPLOYMENT=vboxtest
+$ export DISNIX_CLIENT_INTERFACE=disnix-nixops-client
+```
 
 With the following command we can dynamically generate a Disnix infrastructure
 model from the machine's configuration:
 
-    $ disnix-capture-infra $(disnixos-geninfra network-bare.nix network-virtualbox.nix --use-nixops) > infrastructure-bare.nix
+```bash
+$ disnix-capture-infra $(disnixos-geninfra network-bare.nix network-virtualbox.nix --use-nixops) > infrastructure-bare.nix
+```
 
 The captured infrastructure model may look as follows:
 
@@ -172,12 +173,16 @@ integrate with the host system's service manager (in NixOS' case: systemd).
 The following command deploys the MySQL DBMS server and Apache Tomcat server as
 Disnix services:
 
-    $ disnix-env -s services-containers.nix -i infrastructure-bare.nix -d distribution-containers.nix --profile containers
+```bash
+$ disnix-env -s services-containers.nix -i infrastructure-bare.nix -d distribution-containers.nix --profile containers
+```
 
 After the above command succeeds, we can capture the machine configurations
 again:
 
-    $ disnix-capture-infra infrastructure-bare.nix > infrastructure-containers.nix
+```bash
+$ disnix-capture-infra infrastructure-bare.nix > infrastructure-containers.nix
+```
 
 The captured configuration may now look as follows:
 
@@ -227,13 +232,15 @@ We can use the newly captured infrastructure model and the "conventional"
 services model to deploy the databases and web applications that constitute the
 StaffTracker system:
 
-    $ disnix-env -s services.nix -i infrastructure-containers.nix -d distribution.nix --profile services
+```bash
+$ disnix-env -s services.nix -i infrastructure-containers.nix -d distribution.nix --profile services
+```
 
 After the above command succeeds, we have the StaffTracker system running whose
 services and underlying containers both have been deployed with Disnix.
 
-Deploying multiple instances of containers and services
--------------------------------------------------------
+Deploying multiple instances of containers and services as two integrated systems
+---------------------------------------------------------------------------------
 When using Disnix for deploying the containers, it is also possible to run
 multiple MySQL and Apache Tomcat servers on one machine and to deploy services
 to them.
@@ -241,29 +248,39 @@ to them.
 As with the previous example, we must first deploy a network without any
 additional containers:
 
-    $ nixops create ./network-bare.nix ./network-virtualbox.nix -d vboxtest
-    $ nixops deploy -d vboxtest
+```bash
+$ nixops create ./network-bare.nix ./network-virtualbox.nix -d vboxtest
+$ nixops deploy -d vboxtest
+```
 
 We must set the following environment variables to integrate Disnix with
 NixOps:
 
-    $ export NIXOPS_DEPLOYMENT=vbox
-    $ export DISNIX_CLIENT_INTERFACE=disnix-nixops-client
+```bash
+$ export NIXOPS_DEPLOYMENT=vbox
+$ export DISNIX_CLIENT_INTERFACE=disnix-nixops-client
+```
 
 As with the previous example, the following command yields a basic
 infrastructure model:
 
-    $ disnix-capture-infra $(disnixos-geninfra network-bare.nix network-virtualbox.nix --use-nixops) > infrastructure-bare.nix
+```bash
+$ disnix-capture-infra $(disnixos-geninfra network-bare.nix network-virtualbox.nix --use-nixops) > infrastructure-bare.nix
+```
 
 Running the following command deploys a multi-container scenario in which one
 machines hosts two MySQL servers and the other two Apache Tomcat servers:
 
-    $ disnix-env -s services-multicontainers.nix -i infrastructure-bare.nix -d distribution-multicontainers.nix --profile containers
+```bash
+$ disnix-env -s services-multicontainers.nix -i infrastructure-bare.nix -d distribution-multicontainers.nix --profile containers
+```
 
 After deployment of the containers succeeds, we can capture the infrastructure
 model again:
 
-    $ disnix-capture-infra infrastructure-bare.nix > infrastructure-containers.nix
+```bash
+$ disnix-capture-infra infrastructure-bare.nix > infrastructure-containers.nix
+```
 
 As may be noticed, we have two MySQL containers and two Apache Tomcat containers
 on one machine in the captured infrastructure model:
@@ -323,7 +340,50 @@ socket paths.
 After deploying the container configuration, we can deploy the services to them,
 by running:
 
-    $ disnix-env -s services.nix -i infrastructure-containers.nix -d distribution-advanced.nix --profile services
+```bash
+$ disnix-env -s services.nix -i infrastructure-containers.nix -d distribution-advanced.nix --profile services
+```
+
+Deploying containers and services as a single system
+----------------------------------------------------
+In addition to deploying the containers and services as two layered systems, we
+can also deploy them as one single system with a single command.
+
+First, we must deploy a bare network configuration (only providing the Disnix
+services) as follows:
+
+```bash
+$ nixops create ./network-bare.nix ./network-virtualbox.nix -d vboxtest
+$ nixops deploy -d vboxtest
+```
+
+We must set the following environment variable to integrate Disnix with
+NixOps:
+
+```bash
+$ export NIXOPS_DEPLOYMENT=vbox
+```
+
+When the network is available, we can deploy the entire system (both containers
+and services) as a whole to the NixOps network, as follows:
+
+```bash
+$ disnixos-env -s services-with-containers.nix -n network-bare.nix -d distribution-with-containers.nix
+```
+
+We can also deploy the multi-instance container variant in a similar way:
+
+```bash
+$ disnixos-env -s services-with-multicontainers.nix -n network-bare.nix -d distribution-with-multicontainers.nix
+```
+
+There is also a more extreme variant demonstrating multiple layers of embedded
+container services: it deploys supervisord, that embeds Apache Tomcat and the
+MySQL DBMS, that embed multiple databases and Java web applications:
+
+```bash
+$ disnixos-env -s services-with-containers-extreme.nix -n network-bare.nix -d distribution-with-containers-extreme.nix
+```
 
 License
 =======
