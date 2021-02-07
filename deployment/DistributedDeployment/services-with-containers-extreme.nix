@@ -7,6 +7,7 @@
 , forceDisableUserChange ? false
 , processManager ? "systemd"
 , nix-processmgmt ? ../../../nix-processmgmt
+, nix-processmgmt-services ? ../../../nix-processmgmt-services
 }@args:
 
 let
@@ -14,8 +15,8 @@ let
     inherit processManager;
   };
 
-  constructors = import "${nix-processmgmt}/examples/service-containers-agnostic/constructors.nix" {
-    inherit pkgs stateDir runtimeDir logDir cacheDir tmpDir forceDisableUserChange processManager;
+  constructors = import "${nix-processmgmt-services}/service-containers-agnostic/constructors.nix" {
+    inherit nix-processmgmt pkgs stateDir runtimeDir logDir cacheDir tmpDir forceDisableUserChange processManager;
   };
 
   containerServicesForSupervisord = import ./services-containers.nix (args // {

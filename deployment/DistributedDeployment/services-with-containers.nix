@@ -7,6 +7,7 @@
 , forceDisableUserChange ? false
 , processManager ? "systemd"
 , nix-processmgmt ? ../../../nix-processmgmt
+, nix-processmgmt-services ? ../../../nix-processmgmt-services
 }@args:
 
 let
