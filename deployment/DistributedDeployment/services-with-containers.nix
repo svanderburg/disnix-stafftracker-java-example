@@ -3,6 +3,7 @@
 , runtimeDir ? "${stateDir}/run"
 , logDir ? "${stateDir}/log"
 , cacheDir ? "${stateDir}/cache"
+, spoolDir ? "${stateDir}/spool"
 , tmpDir ? (if stateDir == "/var" then "/tmp" else "${stateDir}/tmp")
 , forceDisableUserChange ? false
 , processManager ? "systemd"
