@@ -4,6 +4,7 @@
 , logDir ? "${stateDir}/log"
 , cacheDir ? "${stateDir}/cache"
 , spoolDir ? "${stateDir}/spool"
+, libDir ? "${stateDir}/lib"
 , tmpDir ? (if stateDir == "/var" then "/tmp" else "${stateDir}/tmp")
 , forceDisableUserChange ? false
 , processManager ? "systemd"
