@@ -14,7 +14,7 @@ disnixos.disnixTest {
       socket_primary = "/run/mysqld-primary/mysqld.sock"
       test1.wait_for_file(socket_primary)
       test1.succeed(
-          "echo 'show databases;' | ${pkgs.mysql}/bin/mysql --socket={}".format(
+          "echo 'show databases;' | ${pkgs.mariadb}/bin/mysql --socket={}".format(
               socket_primary
           )
       )
@@ -22,7 +22,7 @@ disnixos.disnixTest {
       socket_secondary = "/run/mysqld-secondary/mysqld.sock"
       test1.wait_for_file(socket_secondary)
       test1.succeed(
-          "echo 'show databases;' | ${pkgs.mysql}/bin/mysql --socket={}".format(
+          "echo 'show databases;' | ${pkgs.mariadb}/bin/mysql --socket={}".format(
               socket_secondary
           )
       )

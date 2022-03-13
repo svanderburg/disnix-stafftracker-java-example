@@ -10,7 +10,7 @@ disnixos.disnixTest {
 
       test2.wait_for_file(socket_file)
       test2.succeed(
-          "echo 'show databases;' | ${pkgs.mysql}/bin/mysql"
+          "echo 'show databases;' | ${pkgs.mariadb}/bin/mysql"
       )
 
       test1.wait_for_file("/var/tomcat/webapps")
