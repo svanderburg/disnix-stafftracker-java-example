@@ -1,11 +1,11 @@
-{ stdenv, apacheAnt, jdk, axis2
+{ stdenv, apacheAnt, jdk8, axis2
 , GeolocationServiceClient, RoomServiceClient, StaffServiceClient, ZipcodeServiceClient}:
 {GeolocationService, RoomService, StaffService, ZipcodeService}:
 
 stdenv.mkDerivation {
   name = "StaffTracker";
   src = ../../../../services/webapplications/StaffTracker;
-  buildInputs = [ apacheAnt jdk ];
+  buildInputs = [ apacheAnt jdk8 ];
   AXIS2_LIB = "${axis2}/lib";
   GEOLOCATIONSERVICECLIENT_LIB = "${GeolocationServiceClient}/share/java";
   ROOMSERVICECLIENT_LIB = "${RoomServiceClient}/share/java";

@@ -5,6 +5,11 @@ let
 
   self = {
 
+### Overrides
+    geoipjava = pkgs.geoipjava.override {
+      jdk = pkgs.jdk8;
+    };
+
 ### Databases
 
     rooms = callPackage ../pkgs/databases/rooms { };
