@@ -28,7 +28,7 @@ rec {
     httpsPort = 8443;
     serverPort = 8005;
     ajpPort = 8009;
-    commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
+    commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-j.jar" ];
     type = processType;
   };
 
@@ -38,7 +38,7 @@ rec {
     httpsPort = 8444;
     serverPort = 8006;
     ajpPort = 8010;
-    commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-java.jar" ];
+    commonLibs = [ "${pkgs.mysql_jdbc}/share/java/mysql-connector-j.jar" ];
     type = processType;
   };
 

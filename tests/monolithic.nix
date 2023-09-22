@@ -3,6 +3,7 @@
 with import "${nixpkgs}/nixos/lib/testing-python.nix" { system = builtins.currentSystem; };
 
 simpleTest {
+  name = "monolithic";
   nodes = {
     test1 = import ../deployment/configurations/test-vm-monolithic.nix;
   };
